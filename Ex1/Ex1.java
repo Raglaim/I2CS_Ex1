@@ -76,9 +76,28 @@ public class Ex1 {
 	 */
 	public static boolean equals(double[] p1, double[] p2) {
 		boolean ans = true;
-        /** add you code below
-
-         /////////////////// */
+        if (p1 == null && p2 == null) {
+            return ans;
+        }
+        if (p1.length == p2.length){
+            for (int i = 0; i < p1.length; i++) {
+                if (Math.abs(f(p1, i) - f(p2, i)) > EPS) {
+                    return !ans;
+                }
+            }
+            return ans;
+        } if (p1.length > p2.length) {
+            double [] new_p2 = new double[p1.length];
+            System.arraycopy(p2, 0, new_p2, 0, p2.length);
+            for (int i = 0; i < p1.length; i++) {
+                if (Math.abs(f(p1, i) - f(new_p2, i)) > EPS) {
+                    return !ans;
+                }
+            }
+            return ans;
+        } else {
+            equals(p2,p1);
+        }
 		return ans;
 	}
 
