@@ -207,12 +207,6 @@ public class Ex1 {
         }
 		return ans;
 	}
-
-    static void main() {
-        double[] p = {2,0,-4};
-        System.out.println(length(p,2,-2,4));
-    }
-	
 	/**
 	 * Given two polynomial functions (p1,p2), a range [x1,x2] and an integer representing the number of Trapezoids between the functions (number of samples in on each polynom).
 	 * This function computes an approximation of the area between the polynomial functions within the x-range.
