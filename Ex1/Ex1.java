@@ -110,14 +110,36 @@ public class Ex1 {
 	 * @return String representing the polynomial function:
 	 */
 	public static String poly(double[] poly) {
-		String ans = "";
-		if(poly.length==0) {ans="0";}
-		else {
-            /** add you code below
-
-             /////////////////// */
-		}
-		return ans;
+        String ans = "";
+        if(poly.length==0) {ans="0";}
+        else {
+            for (int i = poly.length-1; 0 <= i; i-=1) {
+                if (poly[i] == 0) {
+                }else if(i == 0){
+                    if (poly[i] > 0){
+                        ans = ans +" +"+ poly[i];
+                    } else {
+                        ans = ans +" "+ poly[i];
+                    }
+                    break;
+                } else if (i == 1){
+                    if (poly[i] > 0){
+                        ans = ans +" +"+ poly[i] +"x";
+                    } else {
+                        ans = ans +" "+ poly[i] +"x";
+                    }
+                } else {
+                    if (poly[i] > 0){
+                        ans = ans +" +"+ poly[i] +"x^"+(i);
+                    } else {
+                        ans = ans +" "+ poly[i] +"x^"+(i);
+                    }
+                }
+            }
+            ans = ans.trim();
+            return ans;
+        }
+        return ans;
 	}
 	/**
 	 * Given two polynomial functions (p1,p2), a range [x1,x2] and an epsilon eps. This function computes an x value (x1<=x<=x2)

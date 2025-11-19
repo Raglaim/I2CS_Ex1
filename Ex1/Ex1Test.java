@@ -209,7 +209,7 @@ class Ex1Test {
         assertTrue(Ex1.equals(P1_po1,result));
     }
     @Test
-    public void testgetPolynomFromStrinelad(){
+    public void testgetPolynomFromStringelad(){
         double[] str_p1 = Ex1.getPolynomFromString("-1.0x^2 +3.0x +2.0");
         double [] result_p1 = {2,3,-1};
         assertTrue(Ex1.equals(str_p1,result_p1));
@@ -219,6 +219,12 @@ class Ex1Test {
         double[] str_p3 = Ex1.getPolynomFromString("-20x^4 +9.0x^3 -0.0x^2 +1.0x +0.0");
         double [] result_p3 = {0,1,0,9,-20};
         assertTrue(Ex1.equals(str_p3,result_p3));
-
+    }
+    @Test
+    public void testpolyelad(){
+        double[] p1 = {2,0,3.1,-1.2};
+        String str_p1 = Ex1.poly(p1);
+        String result = "-1.2x^3 +3.1x^2 +2.0";
+        assertEquals(result, str_p1);
     }
 }
