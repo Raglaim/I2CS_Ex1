@@ -184,10 +184,15 @@ public class Ex1 {
 	 */
 	public static double[] getPolynomFromString(String p) {
 		double [] ans = ZERO;//  -1.0x^2 +3.0x +2.0
-        /** add you code below
-
-         /////////////////// */
-		return ans;
+        String[] words = p.split(" ");
+        ans = new double[words.length];
+        int i = 0;
+        for (String word : words) {
+            ans[i] = getcoefficient(word);
+            i++;
+        }
+        reverseArray(ans);
+        return ans;
 	}
 	/**
 	 * This function computes the polynomial function which is the sum of two polynomial functions (p1,p2)
@@ -247,4 +252,68 @@ public class Ex1 {
          /////////////////// */
 		return ans;
 	}
+
+
+
+
+
+
+
+
+
+    // Extra functions
+
+    /**
+     * This function extracts the leading numeric coefficient from an algebraic term string.
+     * Examples: "-1.0x^2" -> -1.0, "+3x" -> 3.0, "0.5x^3" -> 0.5.
+     * @param word
+     * @return
+     */
+    public static double getcoefficient(String word) {
+        double ans = 0;
+        int i = 0;
+        char ch = word.charAt(0);
+        if (ch == '-' || ch =='+'){
+            i++;
+        }
+        while(i<word.length()){
+            ch = word.charAt(i);
+            if (Character.isDigit(ch)){
+                i++;
+            } else if (ch == '.') {
+                i++;
+            } else {
+                break;
+            }
+        }
+
+        String number = word.substring(0,i);
+        ans = Double.parseDouble(number);
+        return ans;
+    }
+
+
+    /**
+     * Reverses the elements of the given array in place.
+     *
+     * @param arr the array to reverse; must not be null
+     * @return  IllegalArgumentException if arr is null
+     *
+     * Example:
+     * int[] nums = {1, 2, 3, 4};
+     * reverseArray(nums);
+     * // nums becomes {4, 3, 2, 1}
+     */
+    public static double[] reverseArray(double[] arr) {
+        if (arr == null) return arr;
+        int i = 0, j = arr.length - 1;
+        while (i < j) {
+            double temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            i++;
+            j--;
+        }
+        return arr;
+    }
 }
