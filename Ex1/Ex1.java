@@ -194,6 +194,7 @@ public class Ex1 {
         /** add you code below
 
          /////////////////// */
+
 		return ans;
 	}
 	/**
@@ -268,12 +269,17 @@ public class Ex1 {
 	 * @return
 	 */
 	public static double[] derivative (double[] po) {
-		double [] ans = ZERO;//
-        /** add you code below
-
-         /////////////////// */
-		return ans;
+        double [] ans = ZERO;//
+        if (po.length <= 1){
+        }else{
+            ans = new double[po.length-1];
+            for (int i = 1; i < po.length; i++) {
+                ans [i-1] = po[i]*i;
+            }
+        }
+        return ans;
 	}
+
 
 
 

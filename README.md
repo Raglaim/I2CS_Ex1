@@ -13,6 +13,8 @@
 
 *  <span style="color:cyan">mul</span> - This function computes the polynomial function which is the multiplication of two polynoms (p1,p2).
 
+* <span style="color:cyan">derivative</span> - This function computes the derivative of the p0 polynomial function.
+
 **Extra functions and their descriptions:**
 
 * <span style="color:cyan">getcoefficient</span> - This function extracts the leading numeric coefficient from an algebraic term string.
