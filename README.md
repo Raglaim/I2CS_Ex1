@@ -5,7 +5,9 @@
 
 * <span style="color:cyan">equals</span> - Two polynomials functions are equal if and only if they have the same values f(x) for n+1 values of x, where n is the max degree (over p1, p2) - up to an epsilon (aka EPS) value.
 
-* <span style="color:cyan">getPolynomFromString</span> - This function computes the array representation of a polynomial function from a String representation. Note:given a polynomial function represented as a double array, getPolynomFromString(poly(p)) should return an array equals to p.
+* <span style="color:cyan">poly</span> - Computes a String representing the polynomial function.
+
+* <span style="color:cyan">getPolynomFromString</span> - This function computes the array representation of a polynomial function from a String representation.
 
 * <span style="color:cyan">add</span> - This function computes the polynomial function which is the sum of two polynomial functions (p1,p2).
 
