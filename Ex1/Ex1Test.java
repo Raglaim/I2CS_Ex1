@@ -240,4 +240,19 @@ class Ex1Test {
         double[] result2 = {2,-0.5,0.5};
         assertTrue(Ex1.equals(result2,three_point));
     }
+    @Test
+    public void testlenghtelad() {
+        double[] p_1 = {0,1};
+        double x1_1 = 0;
+        double x2_1 = 10;
+        int numberOfSegments_1 = 10;
+        double result_1 = Ex1.length(p_1,x1_1,x2_1,numberOfSegments_1);
+        assertTrue(result_1-14.142 <= Ex1.EPS);
+        double[] p_2 = {2,0,-4};
+        double x1_2 = 2;
+        double x2_2 = -2;
+        int numberOfSegments_2 = 4;
+        double result_2 = Ex1.length(p_2,x1_2,x2_2,numberOfSegments_2);
+        assertTrue(result_2-32.329 <= Ex1.EPS);
+    }
 }

@@ -1,5 +1,6 @@
 package assignments.Ex1;
 
+import java.lang.ref.Cleaner;
 import java.util.Arrays;
 
 /**
@@ -185,12 +186,32 @@ public class Ex1 {
 	 * @return the length approximation of the function between f(x1) and f(x2).
 	 */
 	public static double length(double[] p, double x1, double x2, int numberOfSegments) {
-		double ans = x1;
-        /** add you code below
-
-         /////////////////// */
+		double ans = 0;
+        double h = Math.abs(x1-x2)/numberOfSegments;
+        if(x1 == x2){
+            return ans;
+        } else if (x1 < x2) {
+            for (double i = 0; i < x2-x1; i += h) {
+                double y1 = f(p,x1+i);
+                double y2 = f(p,x1+i+h);
+                double distance = Math.sqrt(Math.pow((y2-y1),2) + Math.pow((h),2));
+                ans += distance;
+            }
+        } else {
+            for (double i = 0; i < x1-x2; i += h) {
+                double y1 = f(p,x2+i);
+                double y2 = f(p,x2+i+h);
+                double distance = Math.sqrt(Math.pow((y2-y1),2)+Math.pow((h),2));
+                ans += distance;
+            }
+        }
 		return ans;
 	}
+
+    static void main() {
+        double[] p = {2,0,-4};
+        System.out.println(length(p,2,-2,4));
+    }
 	
 	/**
 	 * Given two polynomial functions (p1,p2), a range [x1,x2] and an integer representing the number of Trapezoids between the functions (number of samples in on each polynom).
@@ -207,8 +228,7 @@ public class Ex1 {
 		double ans = 0;
         /** add you code below
 
-         /////////////////// */
-
+        /////////////////// */
 		return ans;
 	}
 	/**
