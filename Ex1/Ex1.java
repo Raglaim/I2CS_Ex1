@@ -246,7 +246,11 @@ public class Ex1 {
             }
             System.arraycopy(p1, p2.length, ans, p2.length, p1.length - p2.length);
         } else {
-            add(p2, p1);
+            ans = new double[p2.length];
+            for (int i = 0; i < p1.length; i++) {
+                ans[i] = p2[i] + p1[i];
+            }
+            System.arraycopy(p2, p1.length, ans, p1.length, p2.length - p1.length);
         }
         return ans;
     }
@@ -272,10 +276,17 @@ public class Ex1 {
             System.arraycopy(mul_p,0,ans,0,mul_p.length);
             return ans;
         } else {
-            mul(p2,p1);
+            double [] mul_p = new double[p2.length+p1.length-1];
+            for (int i = 0; i < p1.length; i++) {
+                for (int j = 0; j < p2.length; j++) {
+                    mul_p[i+j] = mul_p[i+j]+(p1[i]*p2[j]);
+                }
+            }
+            ans = new double[mul_p.length];
+            System.arraycopy(mul_p,0,ans,0,mul_p.length);
+            return ans;
         }
-        return ans;
-	}
+    }
 
 	/**
 	 * This function computes the derivative of the p0 polynomial function.

@@ -3,6 +3,8 @@
 
 * <span style="color:cyan">f</span> - Computes the f(x) value of the polynomial function at x.
 
+* <span style="color:cyan">PolynomFromPoints</span> - This function computes a polynomial representation from a set of 2D points on the polynom. this function only works for a set of points containing up to 3 points, else returns null.
+
 * <span style="color:cyan">equals</span> - Two polynomials functions are equal if and only if they have the same values f(x) for n+1 values of x, where n is the max degree (over p1, p2) - up to an epsilon (aka EPS) value.
 
 * <span style="color:cyan">poly</span> - Computes a String representing the polynomial function.
