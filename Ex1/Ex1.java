@@ -1,5 +1,7 @@
 package assignments.Ex1;
 
+import java.util.Arrays;
+
 /**
  * Introduction to Computer Science 2026, Ariel University,
  * Ex1: arrays, static functions and JUnit
@@ -202,10 +204,7 @@ public class Ex1 {
             }
             System.arraycopy(p1, p2.length, ans, p2.length, p1.length - p2.length);
         } else {
-            double[] temp = p1;
-            p1 = p2;
-            p2 = temp;
-            add(p1, p2);
+            add(p2, p1);
         }
         return ans;
     }
@@ -216,12 +215,26 @@ public class Ex1 {
 	 * @return
 	 */
 	public static double[] mul(double[] p1, double[] p2) {
-		double [] ans = ZERO;//
-        /** add you code below
-
-         /////////////////// */
-		return ans;
+        double [] ans = ZERO;//
+        if (p1 == ZERO || p2 == ZERO){
+            return ans;
+        }
+        if (p1.length >= p2.length){
+            double [] mul_p = new double[p1.length+p2.length-1];
+            for (int i = 0; i < p2.length; i++) {
+                for (int j = 0; j < p1.length; j++) {
+                    mul_p[i+j] = mul_p[i+j]+(p2[i]*p1[j]);
+                }
+            }
+            ans = new double[mul_p.length];
+            System.arraycopy(mul_p,0,ans,0,mul_p.length);
+            return ans;
+        } else {
+            mul(p2,p1);
+        }
+        return ans;
 	}
+
 	/**
 	 * This function computes the derivative of the p0 polynomial function.
 	 * @param po

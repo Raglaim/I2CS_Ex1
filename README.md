@@ -7,3 +7,4 @@
 
 <span style="color:cyan">equals</span> - Two polynomials functions are equal if and only if they have the same values f(x) for n+1 values of x, where n is the max degree (over p1, p2) - up to an epsilon (aka EPS) value.
 
+<span style="color:cyan">mul</span> - This function computes the polynomial function which is the multiplication of two polynoms (p1,p2).

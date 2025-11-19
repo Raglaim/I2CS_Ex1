@@ -202,4 +202,10 @@ class Ex1Test {
 		double area = 58.5658;
 		assertEquals(a1,area, Ex1.EPS);
 	}
+    @Test
+    public void testmulelad(){
+        double [] P1_po1 = Ex1.mul(P1,po1);
+        double [] result = {4,4,6,4,-2};
+        assertTrue(Ex1.equals(P1_po1,result));
+    }
 }
