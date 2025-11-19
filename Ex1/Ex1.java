@@ -60,14 +60,28 @@ public class Ex1 {
 	 * @return an array of doubles representing the coefficients of the polynom.
 	 */
 	public static double[] PolynomFromPoints(double[] xx, double[] yy) {
-		double [] ans = null;
-		int lx = xx.length;
-		int ly = yy.length;
-		if(xx!=null && yy!=null && lx==ly && lx>1 && lx<4) {
-		/** add you code below
-
-		/////////////////// */
-		}
+        double [] ans = null;
+        int lx = xx.length;
+        int ly = yy.length;
+        if(xx!=null && yy!=null && lx==ly && lx>1 && lx<4) {
+            if (lx==2){
+                double m = (yy[1]-yy[0])/(xx[1]-xx[0]);
+                double b = yy[0] - m*xx[0];
+                ans = new double[]{b,m};
+            } else {
+                double denom = (xx[0] - xx[1]) * (xx[0] - xx[2]) * (xx[1] - xx[2]);
+                double a = (xx[2] * (yy[1] - yy[0]) +
+                        xx[1] * (yy[0] - yy[2]) +
+                        xx[0] * (yy[2] - yy[1])) / denom;
+                double b = (xx[2] * xx[2] * (yy[0] - yy[1]) +
+                        xx[1] * xx[1] * (yy[2] - yy[0]) +
+                        xx[0] * xx[0] * (yy[1] - yy[2])) / denom;
+                double c = (xx[1] * xx[2] * (xx[1] - xx[2]) * yy[0] +
+                        xx[2] * xx[0] * (xx[2] - xx[0]) * yy[1] +
+                        xx[0] * xx[1] * (xx[0] - xx[1]) * yy[2]) / denom;
+                ans = new double[]{c, b, a};
+            }
+        }
 		return ans;
 	}
 	/** Two polynomials functions are equal if and only if they have the same values f(x) for n+1 values of x,
@@ -319,8 +333,6 @@ public class Ex1 {
         ans = Double.parseDouble(number);
         return ans;
     }
-
-
     /**
      * Reverses the elements of the given array in place.
      *

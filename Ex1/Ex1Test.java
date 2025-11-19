@@ -203,13 +203,13 @@ class Ex1Test {
 		assertEquals(a1,area, Ex1.EPS);
 	}
     @Test
-    public void testmulelad(){
+    public void testmulelad() {
         double [] P1_po1 = Ex1.mul(P1,po1);
         double [] result = {4,4,6,4,-2};
         assertTrue(Ex1.equals(P1_po1,result));
     }
     @Test
-    public void testgetPolynomFromStringelad(){
+    public void testgetPolynomFromStringelad() {
         double[] str_p1 = Ex1.getPolynomFromString("-1.0x^2 +3.0x +2.0");
         double [] result_p1 = {2,3,-1};
         assertTrue(Ex1.equals(str_p1,result_p1));
@@ -221,10 +221,23 @@ class Ex1Test {
         assertTrue(Ex1.equals(str_p3,result_p3));
     }
     @Test
-    public void testpolyelad(){
+    public void testpolyelad() {
         double[] p1 = {2,0,3.1,-1.2};
         String str_p1 = Ex1.poly(p1);
         String result = "-1.2x^3 +3.1x^2 +2.0";
         assertEquals(result, str_p1);
+    }
+    @Test
+    public void testPolynomFromPoints() {
+        double[] xx1 = {1,3};
+        double[] yy1 = {2,6};
+        double[] two_point = Ex1.PolynomFromPoints(xx1,yy1);
+        double[] result1 = {0,2};
+        assertTrue(Ex1.equals(result1,two_point));
+        double[] xx2 = {1,2,3};
+        double[] yy2 = {2,3,5};
+        double[] three_point = Ex1.PolynomFromPoints(xx2,yy2);
+        double[] result2 = {2,-0.5,0.5};
+        assertTrue(Ex1.equals(result2,three_point));
     }
 }
