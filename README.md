@@ -11,6 +11,8 @@
 
 * <span style="color:cyan">length</span> - Given a polynomial function (p), a range [x1,x2] and an integer with the number (n) of sample points. This function computes an approximation of the length of the function between f(x1) and f(x2) using n inner sample points and computing the segment-path between them. assuming x1 < x2. This function should be implemented iteratively (none recursive).
 
+* <span style="color:cyan">area</span> - Given two polynomial functions (p1,p2), a range [x1,x2] and an integer representing the number of Trapezoids between the functions (number of samples in on each polynom). This function computes an approximation of the area between the polynomial functions within the x-range.
+
 * <span style="color:cyan">getPolynomFromString</span> - This function computes the array representation of a polynomial function from a String representation.
 
 * <span style="color:cyan">add</span> - This function computes the polynomial function which is the sum of two polynomial functions (p1,p2).
