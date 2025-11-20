@@ -220,9 +220,54 @@ public class Ex1 {
 	 */
 	public static double area(double[] p1,double[]p2, double x1, double x2, int numberOfTrapezoid) {
 		double ans = 0;
-        /** add you code below
-
-        /////////////////// */
+        double h = Math.abs(x1-x2)/numberOfTrapezoid;
+        if (x1 == x2){
+            return ans;
+        } else if (x1 < x2) {
+            for (double i = 0; i+EPS < x2-x1; i+=h) {
+                double y11 = f(p1,x1+i);
+                double y12 = f(p1,x1+i+h);
+                double area1 = 0;
+                if ((y11>=0 && y12 >=0) || (y11<0 && y12<0)) {
+                    area1 = ((y11+y12)*h)/2;
+                } else {
+                    double eps = root_rec(p1,x1+i,x1+i+h,0.000001);
+                    area1 = Math.abs(((y11)*(x1+i-eps))/2) + Math.abs(((y12)*(x1+i+h-eps))/2);
+                }
+                double y21 = f(p2,x1+i);
+                double y22 = f(p2,x1+i+h);
+                double area2 = 0;
+                if ((y21>=0 && y22 >=0) || (y21<0 && y22<0)) {
+                    area2 = ((y21+y22)*h)/2;
+                } else {
+                    double eps = root_rec(p2,x1+i,x1+i+h,0.000001);
+                    area2 = Math.abs(((y21)*(x1+i-eps))/2) + Math.abs(((y22)*(x1+i+h-eps))/2);
+                }
+                ans += Math.abs(area1 - area2);
+            }
+        } else {
+            for (double i = 0; i+EPS < x1-x2; i+=h) {
+                double y11 = f(p1,x2+i);
+                double y12 = f(p1,x2+i+h);
+                double area1 = 0;
+                if ((y11>=0 && y12 >=0) || (y11<0 && y12<0)) {
+                    area1 = ((y11+y12)*h)/2;
+                } else {
+                    double eps = root_rec(p1,x2+i,x2+i+h,0.000001);
+                    area1 = Math.abs(((y11)*(x2+i-eps))/2) + Math.abs(((y12)*(x2+i+h-eps))/2);
+                }
+                double y21 = f(p2,x2+i);
+                double y22 = f(p2,x2+i+h);
+                double area2 = 0;
+                if ((y21>=0 && y22 >=0) || (y21<0 && y22<0)) {
+                    area2 = ((y21+y22)*h)/2;
+                } else {
+                    double eps = root_rec(p2,x2+i,x2+i+h,0.000001);
+                    area2 = Math.abs(((y21)*(x2+i-eps))/2) + Math.abs(((y22)*(x2+i+h-eps))/2);
+                }
+                ans += Math.abs(area1 - area2);
+            }
+        }
 		return ans;
 	}
 	/**
