@@ -1,8 +1,5 @@
 package assignments.Ex1;
 
-import java.lang.ref.Cleaner;
-import java.util.Arrays;
-
 /**
  * Introduction to Computer Science 2026, Ariel University,
  * Ex1: arrays, static functions and JUnit
@@ -20,6 +17,13 @@ public class Ex1 {
 	public static final double EPS = 0.001; // the epsilon to be used for the root approximation.
 	/** The zero polynomial function is represented as an array with a single (0) entry. */
 	public static final double[] ZERO = {0};
+
+
+
+
+
+    // Functions:
+
 	/**
 	 * Computes the f(x) value of the polynomial function at x.
 	 * @param poly - polynomial function
@@ -34,6 +38,9 @@ public class Ex1 {
 		}
 		return ans;
 	}
+
+
+
 	/** Given a polynomial function (p), a range [x1,x2] and an epsilon eps.
 	 * This function computes an x value (x1<=x<=x2) for which |p(x)| < eps, 
 	 * assuming p(x1)*p(x2) <= 0.
@@ -52,6 +59,9 @@ public class Ex1 {
 		if(f12*f1<=0) {return root_rec(p, x1, x12, eps);}
 		else {return root_rec(p, x12, x2, eps);}
 	}
+
+
+
 	/**
 	 * This function computes a polynomial representation from a set of 2D points on the polynom.
 	 * The solution is based on: //	http://stackoverflow.com/questions/717762/how-to-calculate-the-vertex-of-a-parabola-given-three-points
@@ -85,6 +95,9 @@ public class Ex1 {
         }
 		return ans;
 	}
+
+
+
 	/** Two polynomials functions are equal if and only if they have the same values f(x) for n+1 values of x,
 	 * where n is the max degree (over p1, p2) - up to an epsilon (aka EPS) value.
 	 * @param p1 first polynomial function
@@ -112,13 +125,12 @@ public class Ex1 {
                 }
             }
             return ans;
-        } else {
-            equals(p2,p1);
-        }
-		return ans;
+        } else {return equals(p2,p1);}
 	}
 
-	/** 
+
+
+	/**
 	 * Computes a String representing the polynomial function.
 	 * For example the array {2,0,3.1,-1.2} will be presented as the following String  "-1.2x^3 +3.1x^2 +2.0"
 	 * @param poly the polynomial function represented as an array of doubles
@@ -156,6 +168,9 @@ public class Ex1 {
         }
         return ans;
 	}
+
+
+
 	/**
 	 * Given two polynomial functions (p1,p2), a range [x1,x2] and an epsilon eps. This function computes an x value (x1<=x<=x2)
 	 * for which |p1(x) -p2(x)| < eps, assuming (p1(x1)-p2(x1)) * (p1(x2)-p2(x2)) <= 0.
@@ -168,11 +183,16 @@ public class Ex1 {
 	 */
 	public static double sameValue(double[] p1, double[] p2, double x1, double x2, double eps) {
 		double ans = x1;
-        /** add you code below
-
-         /////////////////// */
-		return ans;
+        double f1 = ((f(p1,x1)-f(p2,x1)));
+        double x12 = (x1+x2)/2;
+        double f12 = f(p1,x12) - f(p2,x12);
+        if (Math.abs(f12) < eps){return x12;}
+        if (f12 * f1 <= 0){return(sameValue(p1, p2, x1, x12, eps));}
+        else {return(sameValue(p1, p2, x12, x2, eps));}
 	}
+
+
+
 	/**
 	 * Given a polynomial function (p), a range [x1,x2] and an integer with the number (n) of sample points.
 	 * This function computes an approximation of the length of the function between f(x1) and f(x2) 
@@ -197,16 +217,12 @@ public class Ex1 {
                 double distance = Math.sqrt(Math.pow((y2-y1),2) + Math.pow((h),2));
                 ans += distance;
             }
-        } else {
-            for (double i = 0; i < x1-x2; i += h) {
-                double y1 = f(p,x2+i);
-                double y2 = f(p,x2+i+h);
-                double distance = Math.sqrt(Math.pow((y2-y1),2)+Math.pow((h),2));
-                ans += distance;
-            }
-        }
-		return ans;
+            return ans;
+        } else {return length(p, x2, x1, numberOfSegments);}
 	}
+
+
+
 	/**
 	 * Given two polynomial functions (p1,p2), a range [x1,x2] and an integer representing the number of Trapezoids between the functions (number of samples in on each polynom).
 	 * This function computes an approximation of the area between the polynomial functions within the x-range.
@@ -218,58 +234,86 @@ public class Ex1 {
 	 * @param numberOfTrapezoid - a natural number representing the number of Trapezoids between x1 and x2.
 	 * @return the approximated area between the two polynomial functions within the [x1,x2] range.
 	 */
-	public static double area(double[] p1,double[]p2, double x1, double x2, int numberOfTrapezoid) {
-		double ans = 0;
+    public static double area(double[] p1,double[]p2, double x1, double x2, int numberOfTrapezoid) {
+        double ans = 0;
         double h = Math.abs(x1-x2)/numberOfTrapezoid;
         if (x1 == x2){
             return ans;
         } else if (x1 < x2) {
-            for (double i = 0; i+EPS < x2-x1; i+=h) {
-                double y11 = f(p1,x1+i);
-                double y12 = f(p1,x1+i+h);
+            for (double i = x1; i+EPS <= x2; i+=h) {
+                double y11 = f(p1,i);
+                double y12 = f(p1,i+h);
+                double y21 = f(p2, i);
+                double y22 = f(p2,i+h);
                 double area1 = 0;
-                if ((y11>=0 && y12 >=0) || (y11<0 && y12<0)) {
-                    area1 = ((y11+y12)*h)/2;
-                } else {
-                    double eps = root_rec(p1,x1+i,x1+i+h,0.000001);
-                    area1 = Math.abs(((y11)*(x1+i-eps))/2) + Math.abs(((y12)*(x1+i+h-eps))/2);
-                }
-                double y21 = f(p2,x1+i);
-                double y22 = f(p2,x1+i+h);
                 double area2 = 0;
-                if ((y21>=0 && y22 >=0) || (y21<0 && y22<0)) {
-                    area2 = ((y21+y22)*h)/2;
+                double combined_area = 0;
+                if ((y11 >= 0 && y12 >= 0) || (y11 <= 0 && y12 <= 0)){
+                    area1 = calctrapezoidarea(y11, y12, h);
+                    if ((y21 >= 0 && y22 >= 0) || (y21 <= 0 && y22 <= 0)){
+                        area2 = calctrapezoidarea(y21, y22, h);
+                        combined_area = Math.abs(area1 - area2);
+                        ans += combined_area;
+                    } else {
+                        double eps = root_rec(p2, i, i+h, 0.000001);
+                        double area21 = calctrianglearea(y21, Math.abs(eps - i));
+                        double area22 = calctrianglearea(y22, Math.abs(eps - i - h));
+                        if (y21 <= 0){
+                            if (y11 >= 0){
+                                combined_area = area1 + area21 - area22;
+                                ans += combined_area;
+                            } else {
+                                combined_area = Math.abs(area1) - area21 + area22;
+                                ans += combined_area;
+                            }
+                        } else {
+                            if (y11 >= 0){
+                                combined_area = area1 - area21 + area22;
+                                ans += combined_area;
+                            } else {
+                                combined_area = Math.abs(area1) + area21 - area22;
+                                ans += combined_area;
+                            }
+                        }
+                    }
                 } else {
-                    double eps = root_rec(p2,x1+i,x1+i+h,0.000001);
-                    area2 = Math.abs(((y21)*(x1+i-eps))/2) + Math.abs(((y22)*(x1+i+h-eps))/2);
+                    double eps1 = root_rec(p1, i, i+h, 0.000001);
+                    double area11 = calctrianglearea(y11, Math.abs(eps1- i));
+                    double area12 = calctrianglearea(y12, Math.abs(eps1 - i - h));
+                    area1 = area11 + area12;
+                    if ((y21 >= 0 && y22 >= 0) || (y21 <= 0 && y22 <= 0)){
+                        area2 = calctrapezoidarea(y21, y22, h);
+                        if (y11 <= 0){
+                            if (y21 >= 0){
+                                combined_area = area2 + area11 - area12;
+                                ans += combined_area;
+                            } else {
+                                combined_area = Math.abs(area2) - area11 + area12;
+                                ans += combined_area;
+                            }
+                        } else {
+                            if (y21 >= 0){
+                                combined_area = area2 - area11 + area12;
+                                ans += combined_area;
+                            } else {
+                                combined_area = Math.abs(area2) + area11 - area12;
+                                ans += combined_area;
+                            }
+                        }
+                    } else {
+                        double mid = sameValue(p1, p2, i, i+h, 0.000001);
+                        area1 = calctrianglearea(Math.abs(y11-y21), Math.abs(mid - i));
+                        area2 = calctrianglearea(Math.abs(y12-y22), Math.abs(mid-i-h));
+                        ans += (area1 + area2);
+                    }
                 }
-                ans += Math.abs(area1 - area2);
             }
-        } else {
-            for (double i = 0; i+EPS < x1-x2; i+=h) {
-                double y11 = f(p1,x2+i);
-                double y12 = f(p1,x2+i+h);
-                double area1 = 0;
-                if ((y11>=0 && y12 >=0) || (y11<0 && y12<0)) {
-                    area1 = ((y11+y12)*h)/2;
-                } else {
-                    double eps = root_rec(p1,x2+i,x2+i+h,0.000001);
-                    area1 = Math.abs(((y11)*(x2+i-eps))/2) + Math.abs(((y12)*(x2+i+h-eps))/2);
-                }
-                double y21 = f(p2,x2+i);
-                double y22 = f(p2,x2+i+h);
-                double area2 = 0;
-                if ((y21>=0 && y22 >=0) || (y21<0 && y22<0)) {
-                    area2 = ((y21+y22)*h)/2;
-                } else {
-                    double eps = root_rec(p2,x2+i,x2+i+h,0.000001);
-                    area2 = Math.abs(((y21)*(x2+i-eps))/2) + Math.abs(((y22)*(x2+i+h-eps))/2);
-                }
-                ans += Math.abs(area1 - area2);
-            }
-        }
-		return ans;
-	}
+            return ans;
+        } else {return area(p1, p2, x2, x1, numberOfTrapezoid);}
+    }
+
+
+
 	/**
 	 * This function computes the array representation of a polynomial function from a String
 	 * representation. Note:given a polynomial function represented as a double array,
@@ -290,6 +334,9 @@ public class Ex1 {
         reverseArray(ans);
         return ans;
 	}
+
+
+
 	/**
 	 * This function computes the polynomial function which is the sum of two polynomial functions (p1,p2)
 	 * @param p1
@@ -304,15 +351,12 @@ public class Ex1 {
                 ans[i] = p1[i] + p2[i];
             }
             System.arraycopy(p1, p2.length, ans, p2.length, p1.length - p2.length);
-        } else {
-            ans = new double[p2.length];
-            for (int i = 0; i < p1.length; i++) {
-                ans[i] = p2[i] + p1[i];
-            }
-            System.arraycopy(p2, p1.length, ans, p1.length, p2.length - p1.length);
-        }
-        return ans;
+            return ans;
+        } else {return add(p2, p1);}
     }
+
+
+
 	/**
 	 * This function computes the polynomial function which is the multiplication of two polynoms (p1,p2)
 	 * @param p1
@@ -334,18 +378,10 @@ public class Ex1 {
             ans = new double[mul_p.length];
             System.arraycopy(mul_p,0,ans,0,mul_p.length);
             return ans;
-        } else {
-            double [] mul_p = new double[p2.length+p1.length-1];
-            for (int i = 0; i < p1.length; i++) {
-                for (int j = 0; j < p2.length; j++) {
-                    mul_p[i+j] = mul_p[i+j]+(p1[i]*p2[j]);
-                }
-            }
-            ans = new double[mul_p.length];
-            System.arraycopy(mul_p,0,ans,0,mul_p.length);
-            return ans;
-        }
+        } else {return mul(p2, p1);}
     }
+
+
 
 	/**
 	 * This function computes the derivative of the p0 polynomial function.
@@ -368,12 +404,7 @@ public class Ex1 {
 
 
 
-
-
-
-
-
-    // Extra functions
+    // Extra functions:
 
     /**
      * This function extracts the leading numeric coefficient from an algebraic term string.
@@ -403,6 +434,9 @@ public class Ex1 {
         ans = Double.parseDouble(number);
         return ans;
     }
+
+
+
     /**
      * Reverses the elements of the given array in place.
      *
@@ -425,5 +459,36 @@ public class Ex1 {
             j--;
         }
         return arr;
+    }
+
+
+
+    /**
+     * Calculates the area of a triangle using its height and base length.
+     * The formula used is: (base * height) / 2.
+     *
+     * @param height the height of the triangle (must be a positive value)
+     * @param base the length of the base of the triangle (must be a positive value)
+     * @return the computed area of the triangle as a double
+     */
+    public static double calctrianglearea(double base, double height){
+        double area = Math.abs((base * height) / 2);
+        return area;
+    }
+
+
+
+    /**
+     * Calculates the area of a trapezoid using its height and the lengths of its two bases.
+     * The formula used is: ((base1 + base2) * height) / 2.
+     *
+     * @param height the height of the trapezoid (must be a positive value)
+     * @param base1 the length of the first base (must be a positive value)
+     * @param base2 the length of the second base (must be a positive value)
+     * @return the computed area of the trapezoid as a double
+     */
+    public static double calctrapezoidarea(double base1, double base2, double height){
+        double area = ((base1 + base2) * height) / 2;
+        return area;
     }
 }
