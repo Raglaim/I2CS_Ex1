@@ -240,72 +240,21 @@ public class Ex1 {
         if (x1 == x2){
             return ans;
         } else if (x1 < x2) {
-            for (double i = x1; i+EPS <= x2; i+=h) {
-                double y11 = f(p1,i);
-                double y12 = f(p1,i+h);
-                double y21 = f(p2, i);
-                double y22 = f(p2,i+h);
-                double area1 = 0;
-                double area2 = 0;
-                double combined_area = 0;
-                if ((y11 >= 0 && y12 >= 0) || (y11 <= 0 && y12 <= 0)){
-                    area1 = calctrapezoidarea(y11, y12, h);
-                    if ((y21 >= 0 && y22 >= 0) || (y21 <= 0 && y22 <= 0)){
-                        area2 = calctrapezoidarea(y21, y22, h);
-                        combined_area = Math.abs(area1 - area2);
-                        ans += combined_area;
-                    } else {
-                        double eps = root_rec(p2, i, i+h, 0.000001);
-                        double area21 = calctrianglearea(y21, Math.abs(eps - i));
-                        double area22 = calctrianglearea(y22, Math.abs(eps - i - h));
-                        if (y21 <= 0){
-                            if (y11 >= 0){
-                                combined_area = area1 + area21 - area22;
-                                ans += combined_area;
-                            } else {
-                                combined_area = Math.abs(area1) - area21 + area22;
-                                ans += combined_area;
-                            }
-                        } else {
-                            if (y11 >= 0){
-                                combined_area = area1 - area21 + area22;
-                                ans += combined_area;
-                            } else {
-                                combined_area = Math.abs(area1) + area21 - area22;
-                                ans += combined_area;
-                            }
-                        }
-                    }
+            for (double i = x1; i+EPS < x2; i+=h) {
+                double f11 = f(p1,i);
+                double f12 = f(p1,i+h);
+                double f21 = f(p2, i);
+                double f22 = f(p2,i+h);
+                double base1 = (f11 - f21);
+                double base2 = (f12 - f22);
+                if ((base1 * base2) < 0){
+                    double mid = sameValue(p1, p2, i, i+h, 0.000001);
+                    double area1 = calctrianglearea(base1, mid - i);
+                    double area2 = calctrianglearea(base2, mid - i -h);
+                    ans += (area1 + area2);
                 } else {
-                    double eps1 = root_rec(p1, i, i+h, 0.000001);
-                    double area11 = calctrianglearea(y11, Math.abs(eps1- i));
-                    double area12 = calctrianglearea(y12, Math.abs(eps1 - i - h));
-                    area1 = area11 + area12;
-                    if ((y21 >= 0 && y22 >= 0) || (y21 <= 0 && y22 <= 0)){
-                        area2 = calctrapezoidarea(y21, y22, h);
-                        if (y11 <= 0){
-                            if (y21 >= 0){
-                                combined_area = area2 + area11 - area12;
-                                ans += combined_area;
-                            } else {
-                                combined_area = Math.abs(area2) - area11 + area12;
-                                ans += combined_area;
-                            }
-                        } else {
-                            if (y21 >= 0){
-                                combined_area = area2 - area11 + area12;
-                                ans += combined_area;
-                            } else {
-                                combined_area = Math.abs(area2) + area11 - area12;
-                                ans += combined_area;
-                            }
-                        }
-                    } else {
-                        double mid = sameValue(p1, p2, i, i+h, 0.000001);
-                        area1 = calctrianglearea(Math.abs(y11-y21), Math.abs(mid - i));
-                        area2 = calctrianglearea(Math.abs(y12-y22), Math.abs(mid-i-h));
-                        ans += (area1 + area2);
-                    }
+                    double area = calctrapezoidarea(base1, base2, h);
+                    ans += area;
                 }
             }
             return ans;
@@ -488,7 +437,7 @@ public class Ex1 {
      * @return the computed area of the trapezoid as a double
      */
     public static double calctrapezoidarea(double base1, double base2, double height){
-        double area = ((base1 + base2) * height) / 2;
+        double area = Math.abs(((base1 + base2) * height) / 2);
         return area;
     }
 }
