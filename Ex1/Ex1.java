@@ -274,13 +274,10 @@ public class Ex1 {
 	public static double[] getPolynomFromString(String p) {
 		double [] ans = ZERO;//  -1.0x^2 +3.0x +2.0
         String[] words = p.split(" ");
-        ans = new double[words.length];
-        int i = 0;
+        ans = new double[getxpower(p)+1];
         for (String word : words) {
-            ans[i] = getcoefficient(word);
-            i++;
+            ans[getxpower(word)] = getcoefficient(word);
         }
-        reverseArray(ans);
         return ans;
 	}
 
@@ -439,5 +436,22 @@ public class Ex1 {
     public static double calctrapezoidarea(double base1, double base2, double height){
         double area = Math.abs(((base1 + base2) * height) / 2);
         return area;
+    }
+
+
+
+    public static int getxpower(String poly){
+        poly = poly+"  ";
+        int power = 0; //  -1.0x^2 +3.0x +2.0
+        for (int i = 0; i < poly.length(); i++) {
+            if (poly.charAt(i) == 'x'){
+                if (poly.charAt(i+1) == '^') {
+                    return Integer.parseInt("" + poly.charAt(i + 2));
+                } else {
+                    return 1;
+                }
+            }
+        }
+        return power;
     }
 }

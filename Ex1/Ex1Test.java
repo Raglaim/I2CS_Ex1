@@ -216,7 +216,7 @@ class Ex1Test {
         double[] str_p2 = Ex1.getPolynomFromString("10.0");
         double [] result_p2 = {10};
         assertTrue(Ex1.equals(str_p2,result_p2));
-        double[] str_p3 = Ex1.getPolynomFromString("-20x^4 +9.0x^3 -0.0x^2 +1.0x +0.0");
+        double[] str_p3 = Ex1.getPolynomFromString("-20x^4 +9.0x^3 +1.0x");
         double [] result_p3 = {0,1,0,9,-20};
         assertTrue(Ex1.equals(str_p3,result_p3));
     }
