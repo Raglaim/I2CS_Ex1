@@ -359,7 +359,7 @@ public class Ex1 {
      * @return
      */
     public static double getcoefficient(String word) {
-        double ans = 0;
+        double ans = 1;
         int i = 0;
         char ch = word.charAt(0);
         if (ch == '-' || ch =='+'){
@@ -377,6 +377,9 @@ public class Ex1 {
         }
 
         String number = word.substring(0,i);
+        if (number.isEmpty()){
+            return ans;
+        }
         ans = Double.parseDouble(number);
         return ans;
     }
@@ -439,14 +442,33 @@ public class Ex1 {
     }
 
 
-
+    /**
+     * This function extracts the power of x from an algebraic term string.
+     * Examples: "-1.0x^2" -> 2, "+3x" -> 1, "5.0" -> 0.
+     * @param poly
+     * @return
+     */
     public static int getxpower(String poly){
         poly = poly+"  ";
-        int power = 0; //  -1.0x^2 +3.0x +2.0
+        int power = 0;
         for (int i = 0; i < poly.length(); i++) {
             if (poly.charAt(i) == 'x'){
                 if (poly.charAt(i+1) == '^') {
-                    return Integer.parseInt("" + poly.charAt(i + 2));
+                    int x = 0;
+                    double[] pow_arr = new double[0];
+                    while (Character.isDigit(poly.charAt(i+2))) {
+                        double[] new_pow_arr = new double[pow_arr.length + 1];
+                        System.arraycopy(pow_arr, 0, new_pow_arr, 0, pow_arr.length);
+                        pow_arr = new_pow_arr;
+                        pow_arr[x] = Integer.parseInt("" + poly.charAt(i + 2));
+                        x++;
+                        i++;
+                    }
+                    reverseArray(pow_arr);
+                    for (int j = 0; j < pow_arr.length; j++) {
+                        power += (int) (pow_arr[j] * Math.pow(10, j));
+                    }
+                    return power;
                 } else {
                     return 1;
                 }

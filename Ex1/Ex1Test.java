@@ -202,23 +202,38 @@ class Ex1Test {
 		double area = 58.5658;
 		assertEquals(a1,area, Ex1.EPS);
 	}
-    @Test
-    public void testmulelad() {
-        double [] P1_po1 = Ex1.mul(P1,po1);
-        double [] result = {4,4,6,4,-2};
-        assertTrue(Ex1.equals(P1_po1,result));
-    }
+
+    // added tests from here
+
     @Test
     public void testgetPolynomFromStringelad() {
         double[] str_p1 = Ex1.getPolynomFromString("-1.0x^2 +3.0x +2.0");
         double [] result_p1 = {2,3,-1};
         assertTrue(Ex1.equals(str_p1,result_p1));
-        double[] str_p2 = Ex1.getPolynomFromString("10.0");
-        double [] result_p2 = {10};
+        double[] str_p2 = Ex1.getPolynomFromString("-10.0");
+        double [] result_p2 = {-10};
         assertTrue(Ex1.equals(str_p2,result_p2));
-        double[] str_p3 = Ex1.getPolynomFromString("-20x^4 +9.0x^3 +1.0x");
-        double [] result_p3 = {0,1,0,9,-20};
+        double[] str_p3 = Ex1.getPolynomFromString("0");
+        double [] result_p3 = {0};
         assertTrue(Ex1.equals(str_p3,result_p3));
+        double[] str_p4 = Ex1.getPolynomFromString("10");
+        double [] result_p4 = {10};
+        assertTrue(Ex1.equals(str_p4,result_p4));
+        double[] str_p5 = Ex1.getPolynomFromString("-20x^4 +9.0x^3 +1.0x");
+        double [] result_p5 = {0,1,0,9,-20};
+        assertTrue(Ex1.equals(str_p5,result_p5));
+        double[] str_p6 = Ex1.getPolynomFromString("-0.001x^10 +0");
+        double [] result_p6 = {0,0,0,0,0,0,0,0,0,0,-0.001};
+        assertTrue(Ex1.equals(str_p6,result_p6));
+        double[] str_p7 = Ex1.getPolynomFromString("x^100 +67x^67 +0");
+        double [] result_p7 = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,67,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1};
+        assertTrue(Ex1.equals(str_p7,result_p7));
+    }
+    @Test
+    public void testmulelad() {
+        double [] P1_po1 = Ex1.mul(P1,po1);
+        double [] result = {4,4,6,4,-2};
+        assertTrue(Ex1.equals(P1_po1,result));
     }
     @Test
     public void testpolyelad() {

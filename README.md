@@ -13,8 +13,8 @@ The given GUI (`Ex1_GUI.java`) uses `StdDraw` to visualize the polynomial and nu
 ## Files in the Project
 - `Ex1.java` – Implemented static functions (editable)
 - `Ex1Test.java` – JUnit tests for all functions (editable)
-- `Ex1_GUI.java` – GUI for visualization (given; do not modify)
-- `StdDraw.java` – Graphics helper (given; do not modify)
+- `Ex1_GUI.java` – GUI for visualization (do not modify)
+- `StdDraw.java` – Graphics helper (do not modify)
 
 ## *Functions in Ex1 and all of their descriptions:*
 
@@ -47,3 +47,5 @@ The given GUI (`Ex1_GUI.java`) uses `StdDraw` to visualize the polynomial and nu
 * `calctrianglearea` - Calculates the area of a triangle using its height and base length.
 
 * `calctrapezoidarea` - Calculates the area of a trapezoid using its height and the lengths of its two bases.
+
+* `getxpower` - This function extracts the power of x from an algebraic term string.
