@@ -62,15 +62,33 @@ public class Ex1 {
 
 
 
-	/**
-	 * This function computes a polynomial representation from a set of 2D points on the polynom.
-	 * The solution is based on: //	http://stackoverflow.com/questions/717762/how-to-calculate-the-vertex-of-a-parabola-given-three-points
-	 * Note: this function only works for a set of points containing up to 3 points, else returns null.
-	 * @param xx
-	 * @param yy
-	 * @return an array of doubles representing the coefficients of the polynom.
-	 */
-	public static double[] PolynomFromPoints(double[] xx, double[] yy) {
+    /**
+     * Computes the coefficients of a polynomial that passes through a given set of 2D points.
+     * <p>
+     * This method supports:
+     * <ul>
+     *   <li>Two points → returns a linear polynomial (degree 1).</li>
+     *   <li>Three points → returns a quadratic polynomial (degree 2).</li>
+     * </ul>
+     * If the input contains fewer than 2 points or more than 3 points, the method returns {@code null}.
+     * </p>
+     *
+     * <p>
+     * The algorithm is based on: <br>
+     * href= "http://stackoverflow.com/questions/717762/how-to-calculate-the-vertex-of-a-parabola-ge-points<br>
+     * StackOverflow discussion on calculating a parabola from three points.
+     * </p>
+     *
+     * @param xx an array of x-coordinates of the points
+     * @param yy an array of y-coordinates of the points (must match {@code xx} in length)
+     * @return an array of doubles representing the polynomial coefficients:
+     *         <ul>
+     *           <li>For two points: {@code [b, m]} where {@code y = m*x + b}</li>
+     *           <li>For three points: {@code [c, b, a]} where {@code y = a*x^2 + b*x + c}</li>
+     *           <li>{@code null} if input is invalid</li>
+     *         </ul>
+     */
+    public static double[] PolynomFromPoints(double[] xx, double[] yy) {
         double [] ans = null;
         int lx = xx.length;
         int ly = yy.length;
@@ -98,13 +116,26 @@ public class Ex1 {
 
 
 
-	/** Two polynomials functions are equal if and only if they have the same values f(x) for n+1 values of x,
-	 * where n is the max degree (over p1, p2) - up to an epsilon (aka EPS) value.
-	 * @param p1 first polynomial function
-	 * @param p2 second polynomial function
-	 * @return true iff p1 represents the same polynomial function as p2.
-	 */
-	public static boolean equals(double[] p1, double[] p2) {
+    /**
+     * Checks whether two polynomial functions are equal.
+     * <p>
+     * Two polynomials are considered equal if and only if they produce the same values
+     * for <code>n + 1</code> distinct points, where <code>n</code> is the maximum degree
+     * of the two polynomials. Equality is determined up to a small epsilon value (EPS).
+     * </p>
+     *
+     * <ul>
+     *   <li>Compares values of both polynomials at multiple points.</li>
+     *   <li>Handles cases where polynomials have different lengths by padding with zeros.</li>
+     *   <li>Returns {@code true} if all compared values differ by less than EPS.</li>
+     * </ul>
+     *
+     * @param p1 the first polynomial represented as an array of coefficients
+     * @param p2 the second polynomial represented as an array of coefficients
+     * @return {@code true} if {@code p1} and {@code p2} represent the same polynomial function,
+     *         {@code false} otherwise
+     */
+    public static boolean equals(double[] p1, double[] p2) {
 		boolean ans = true;
         if (p1 == null && p2 == null) {
             return ans;
@@ -130,15 +161,32 @@ public class Ex1 {
 
 
 
-	/**
-	 * Computes a String representing the polynomial function.
-	 * For example the array {2,0,3.1,-1.2} will be presented as the following String  "-1.2x^3 +3.1x^2 +2.0"
-	 * @param poly the polynomial function represented as an array of doubles
-	 * @return String representing the polynomial function:
-	 */
-	public static String poly(double[] poly) {
+    /**
+     * Converts a polynomial represented as an array of coefficients into a human-readable string.
+     * <p>
+     * Each element in the array corresponds to a coefficient, where the index represents the degree:
+     * <ul>
+     *   <li>Index 0 → constant term</li>
+     *   <li>Index 1 → coefficient of x</li>
+     *   <li>Index 2 → coefficient of x²</li>
+     *   <li>and so on...</li>
+     * </ul>
+     * </p>
+     *
+     * <p>
+     * For example:
+     * <pre>
+     *   Input:  {2, 0, 3.1, -1.2}
+     *   Output: "-1.2x^3 +3.1x^2 +2.0"
+     * </pre>
+     * </p>
+     *
+     * @param poly the polynomial represented as an array of doubles
+     * @return a string representation of the polynomial, or {@code ""} if the array is empty
+     */
+    public static String poly(double[] poly) {
         String ans = "";
-        if(poly.length==0) {ans="0";}
+        if(poly.length==0) {return ans;}
         else {
             for (int i = poly.length-1; 0 <= i; i-=1) {
                 if (poly[i] == 0) {
@@ -166,22 +214,37 @@ public class Ex1 {
             ans = ans.trim();
             return ans;
         }
-        return ans;
-	}
+    }
 
 
 
-	/**
-	 * Given two polynomial functions (p1,p2), a range [x1,x2] and an epsilon eps. This function computes an x value (x1<=x<=x2)
-	 * for which |p1(x) -p2(x)| < eps, assuming (p1(x1)-p2(x1)) * (p1(x2)-p2(x2)) <= 0.
-	 * @param p1 - first polynomial function
-	 * @param p2 - second polynomial function
-	 * @param x1 - minimal value of the range
-	 * @param x2 - maximal value of the range
-	 * @param eps - epsilon (positive small value (often 10^-3, or 10^-6).
-	 * @return an x value (x1<=x<=x2) for which |p1(x) - p2(x)| < eps.
-	 */
-	public static double sameValue(double[] p1, double[] p2, double x1, double x2, double eps) {
+    /**
+     * Finds an x-value within a given range where two polynomial functions are approximately equal.
+     * <p>
+     * The method searches for a point {@code x} in the interval {@code [x1, x2]} such that:
+     * <pre>
+     *   |p1(x) - p2(x)| < eps
+     * </pre>
+     * under the assumption that:
+     * <pre>
+     *   (p1(x1) - p2(x1)) * (p1(x2) - p2(x2)) <= 0
+     * </pre>
+     * which guarantees that the two functions intersect within the range.
+     * </p>
+     *
+     * <ul>
+     *   <li>Uses a recursive approach (binary search) to narrow down the interval.</li>
+     *   <li>Stops when the difference between the two functions is less than {@code eps}.</li>
+     * </ul>
+     *
+     * @param p1  the first polynomial represented as an array of coefficients
+     * @param p2  the second polynomial represented as an array of coefficients
+     * @param x1  the lower bound of the range
+     * @param x2  the upper bound of the range
+     * @param eps the tolerance for equality (e.g., {@code 1e-3} or {@code 1e-6})
+     * @return an {@code x} value in {@code [x1, x2]} where {@code |p1(x) - p2(x)| < eps}
+     */
+    public static double sameValue(double[] p1, double[] p2, double x1, double x2, double eps) {
 		double ans = x1;
         double f1 = ((f(p1,x1)-f(p2,x1)));
         double x12 = (x1+x2)/2;
@@ -193,27 +256,45 @@ public class Ex1 {
 
 
 
-	/**
-	 * Given a polynomial function (p), a range [x1,x2] and an integer with the number (n) of sample points.
-	 * This function computes an approximation of the length of the function between f(x1) and f(x2) 
-	 * using n inner sample points and computing the segment-path between them.
-	 * assuming x1 < x2. 
-	 * This function should be implemented iteratively (none recursive).
-	 * @param p - the polynomial function
-	 * @param x1 - minimal value of the range
-	 * @param x2 - maximal value of the range
-	 * @param numberOfSegments - (A positive integer value (1,2,...).
-	 * @return the length approximation of the function between f(x1) and f(x2).
-	 */
-	public static double length(double[] p, double x1, double x2, int numberOfSegments) {
+    /**
+     * Approximates the arc length of a polynomial function over a given interval.
+     * <p>
+     * The method computes the length of the curve defined by {@code y = f(x)} for {@code x ∈ [x1, x2]}
+     * using a piecewise linear approximation. The interval is divided into {@code numberOfSegments} equal parts,
+     * and the length is calculated by summing the distances between consecutive sample points.
+     * </p>
+     *
+     * <p>
+     * Assumptions:
+     * <ul>
+     *   <li>{@code x1 < x2} (if not, the method swaps the bounds).</li>
+     *   <li>{@code numberOfSegments > 0}.</li>
+     * </ul>
+     * </p>
+     *
+     * <p>
+     * Formula for each segment:
+     * <pre>
+     *   distance = sqrt((Δx)^2 + (Δy)^2)
+     * </pre>
+     * where {@code Δx = h} and {@code Δy = f(x) - f(x+h)}.
+     * </p>
+     *
+     * @param p the polynomial represented as an array of coefficients
+     * @param x1 the lower bound of the range
+     * @param x2 the upper bound of the range
+     * @param numberOfSegments the number of segments to divide the interval into (positive integer)
+     * @return the approximate length of the curve between {@code f(x1)} and {@code f(x2)}
+     */
+    public static double length(double[] p, double x1, double x2, int numberOfSegments) {
 		double ans = 0;
         double h = Math.abs(x1-x2)/numberOfSegments;
         if(x1 == x2){
             return ans;
         } else if (x1 < x2) {
-            for (double i = 0; i < x2-x1; i += h) {
-                double y1 = f(p,x1+i);
-                double y2 = f(p,x1+i+h);
+            for (double i=x1; i<x2; i+=h) {
+                double y1 = f(p,i);
+                double y2 = f(p,i+h);
                 double distance = Math.sqrt(Math.pow((y2-y1),2) + Math.pow((h),2));
                 ans += distance;
             }
@@ -223,17 +304,30 @@ public class Ex1 {
 
 
 
-	/**
-	 * Given two polynomial functions (p1,p2), a range [x1,x2] and an integer representing the number of Trapezoids between the functions (number of samples in on each polynom).
-	 * This function computes an approximation of the area between the polynomial functions within the x-range.
-	 * The area is computed using Riemann's like integral (https://en.wikipedia.org/wiki/Riemann_integral)
-	 * @param p1 - first polynomial function
-	 * @param p2 - second polynomial function
-	 * @param x1 - minimal value of the range
-	 * @param x2 - maximal value of the range
-	 * @param numberOfTrapezoid - a natural number representing the number of Trapezoids between x1 and x2.
-	 * @return the approximated area between the two polynomial functions within the [x1,x2] range.
-	 */
+    /**
+     * Approximates the area between two polynomial functions over a given interval using a trapezoidal method.
+     * <p>
+     * The method divides the interval {@code [x1, x2]} into {@code numberOfTrapezoid} segments and computes the area
+     * between {@code p1(x)} and {@code p2(x)} using a Riemann-like integral approach:<br>
+     * href="https://en.wikipedia.org/wiki/RiemralRiemann.
+     * </p>
+     *
+     * <p>
+     * Algorithm details:
+     * <ul>
+     *   <li>For each segment, calculate the difference between the two polynomials at the segment endpoints.</li>
+     *   <li>If the functions cross within the segment, split the area into two triangles using {@code sameValue()}.</li>
+     *   <li>Otherwise, compute the trapezoid area using {@code calctrapezoidarea()}.</li>
+     * </ul>
+     * </p>
+     *
+     * @param p1 the first polynomial represented as an array of coefficients
+     * @param p2 the second polynomial represented as an array of coefficients
+     * @param x1 the lower bound of the range
+     * @param x2 the upper bound of the range
+     * @param numberOfTrapezoid the number of trapezoids (segments) to divide the interval into (positive integer)
+     * @return the approximate area between the two polynomial functions within {@code [x1, x2]}
+     */
     public static double area(double[] p1,double[]p2, double x1, double x2, int numberOfTrapezoid) {
         double ans = 0;
         double h = Math.abs(x1-x2)/numberOfTrapezoid;
@@ -263,15 +357,35 @@ public class Ex1 {
 
 
 
-	/**
-	 * This function computes the array representation of a polynomial function from a String
-	 * representation. Note:given a polynomial function represented as a double array,
-	 * getPolynomFromString(poly(p)) should return an array equals to p.
-	 * 
-	 * @param p - a String representing polynomial function.
-	 * @return
-	 */
-	public static double[] getPolynomFromString(String p) {
+    /**
+     * Converts a string representation of a polynomial into an array of coefficients.
+     * <p>
+     * Each term in the string is parsed to extract its coefficient and degree, and the resulting array
+     * is constructed such that:
+     * <ul>
+     *   <li>Index 0 → constant term</li>
+     *   <li>Index 1 → coefficient of x</li>
+     *   <li>Index n → coefficient of xⁿ</li>
+     * </ul>
+     * </p>
+     *
+     * <p>
+     * For example:
+     * <pre>
+     *   Input:  "-1.0x^2 +3.0x +2.0"
+     *   Output: [-1.0, 3.0, 2.0]
+     * </pre>
+     * </p>
+     *
+     * <p>
+     * Note: Given a polynomial {@code p} represented as a double array,
+     * {@code getPolynomFromString(poly(p))} should return an array equal to {@code p}.
+     * </p>
+     *
+     * @param p a string representing a polynomial function (e.g., {@code "-1.0x^2 +3.0x +2.0"})
+     * @return an array of doubles representing the polynomial coefficients
+     */
+    public static double[] getPolynomFromString(String p) {
 		double [] ans = ZERO;//  -1.0x^2 +3.0x +2.0
         String[] words = p.split(" ");
         ans = new double[getxpower(p)+1];
@@ -283,13 +397,27 @@ public class Ex1 {
 
 
 
-	/**
-	 * This function computes the polynomial function which is the sum of two polynomial functions (p1,p2)
-	 * @param p1
-	 * @param p2
-	 * @return
-	 */
-	public static double[] add(double[] p1, double[] p2) {
+    /**
+     * Computes the sum of two polynomial functions.
+     * <p>
+     * The result is a new polynomial whose coefficients are the element-wise sum of {@code p1} and {@code p2}.
+     * If the polynomials have different lengths, the shorter one is padded with zeros.
+     * </p>
+     *
+     * <p>
+     * For example:
+     * <pre>
+     *   p1 = [2, 3]        // 3x + 2
+     *   p2 = [1, 4, 5]     // 5x² + 4x + 1
+     *   Result = [3, 7, 5] // 5x² + 7x + 3
+     * </pre>
+     * </p>
+     *
+     * @param p1 the first polynomial represented as an array of coefficients
+     * @param p2 the second polynomial represented as an array of coefficients
+     * @return a new array representing the sum of {@code p1} and {@code p2}
+     */
+    public static double[] add(double[] p1, double[] p2) {
         double[] ans = ZERO;//
         if (p1.length >= p2.length) {
             ans = new double[p1.length];
@@ -303,13 +431,27 @@ public class Ex1 {
 
 
 
-	/**
-	 * This function computes the polynomial function which is the multiplication of two polynoms (p1,p2)
-	 * @param p1
-	 * @param p2
-	 * @return
-	 */
-	public static double[] mul(double[] p1, double[] p2) {
+    /**
+     * Computes the product of two polynomial functions.
+     * <p>
+     * The result is a new polynomial whose coefficients are obtained by multiplying each term of {@code p1}
+     * with each term of {@code p2} and summing terms with the same degree.
+     * </p>
+     *
+     * <p>
+     * For example:
+     * <pre>
+     *   p1 = [2, 3]          // 3x + 2
+     *   p2 = [1, 4]          // 4x + 1
+     *   Result = [2, 11, 12] // 12x² + 11x + 2
+     * </pre>
+     * </p>
+     *
+     * @param p1 the first polynomial represented as an array of coefficients
+     * @param p2 the second polynomial represented as an array of coefficients
+     * @return a new array representing the product of {@code p1} and {@code p2}
+     */
+    public static double[] mul(double[] p1, double[] p2) {
         double [] ans = ZERO;//
         if (p1 == ZERO || p2 == ZERO){
             return ans;
@@ -329,12 +471,28 @@ public class Ex1 {
 
 
 
-	/**
-	 * This function computes the derivative of the p0 polynomial function.
-	 * @param po
-	 * @return
-	 */
-	public static double[] derivative (double[] po) {
+    /**
+     * Computes the derivative of a polynomial function.
+     * <p>
+     * The derivative is calculated by multiplying each coefficient by its degree and reducing the degree by one.
+     * For example:
+     * <pre>
+     *   Input:  [2, 3, 4]       // 4x² + 3x + 2
+     *   Output: [3, 8]          // 8x + 3
+     * </pre>
+     * </p>
+     *
+     * <p>
+     * Special cases:
+     * <ul>
+     *   <li>If the polynomial has length ≤ 1 (constant or empty), the derivative is {@code [0]}.</li>
+     * </ul>
+     * </p>
+     *
+     * @param po the polynomial represented as an array of coefficients
+     * @return an array representing the derivative of the polynomial
+     */
+    public static double[] derivative (double[] po) {
         double [] ans = ZERO;//
         if (po.length <= 1){
         }else{
@@ -353,10 +511,24 @@ public class Ex1 {
     // Extra functions:
 
     /**
-     * This function extracts the leading numeric coefficient from an algebraic term string.
-     * Examples: "-1.0x^2" -> -1.0, "+3x" -> 3.0, "0.5x^3" -> 0.5.
-     * @param word
-     * @return
+     * Extracts the numeric coefficient from an algebraic term string.
+     * <p>
+     * The method parses the leading numeric part of the term, handling optional signs and decimal points.
+     * If no explicit coefficient is found (e.g., {@code "x^2"}), the default value is {@code 1.0}.
+     * </p>
+     *
+     * <p>
+     * Examples:
+     * <ul>
+     *   <li>{@code "-1.0x^2"} → {@code -1.0}</li>
+     *   <li>{@code "+3x"} → {@code 3.0}</li>
+     *   <li>{@code "0.5x^3"} → {@code 0.5}</li>
+     *   <li>{@code "x"} → {@code 1.0}</li>
+     * </ul>
+     * </p>
+     *
+     * @param word a string representing a single term of a polynomial (e.g., {@code "-1.0x^2"})
+     * @return the numeric coefficient as a {@code double}
      */
     public static double getcoefficient(String word) {
         double ans = 1;
@@ -388,14 +560,21 @@ public class Ex1 {
 
     /**
      * Reverses the elements of the given array in place.
+     * <p>
+     * If the array is {@code null}, the method returns {@code null} without modification.
+     * </p>
      *
-     * @param arr the array to reverse; must not be null
-     * @return  IllegalArgumentException if arr is null
-     *
+     * <p>
      * Example:
-     * int[] nums = {1, 2, 3, 4};
-     * reverseArray(nums);
-     * // nums becomes {4, 3, 2, 1}
+     * <pre>
+     *   double[] nums = {1, 2, 3, 4};
+     *   reverseArray(nums);
+     *   // nums becomes {4, 3, 2, 1}
+     * </pre>
+     * </p>
+     *
+     * @param arr the array to reverse; may be {@code null}
+     * @return the same array with elements reversed, or {@code null} if the input was {@code null}
      */
     public static double[] reverseArray(double[] arr) {
         if (arr == null) return arr;
@@ -413,12 +592,25 @@ public class Ex1 {
 
 
     /**
-     * Calculates the area of a triangle using its height and base length.
-     * The formula used is: (base * height) / 2.
+     * Calculates the area of a triangle using its base and height.
+     * <p>
+     * The formula used is:
+     * <pre>
+     *   area = (base * height) / 2
+     * </pre>
+     * The result is always positive because the method applies {@code Math.abs()}.
+     * </p>
      *
-     * @param height the height of the triangle (must be a positive value)
-     * @param base the length of the base of the triangle (must be a positive value)
-     * @return the computed area of the triangle as a double
+     * <p>
+     * Example:
+     * <pre>
+     *   calctrianglearea(10, 5); // returns 25.0
+     * </pre>
+     * </p>
+     *
+     * @param base   the length of the base of the triangle (should be positive)
+     * @param height the height of the triangle (should be positive)
+     * @return the computed area of the triangle as a {@code double}
      */
     public static double calctrianglearea(double base, double height){
         double area = Math.abs((base * height) / 2);
@@ -428,13 +620,26 @@ public class Ex1 {
 
 
     /**
-     * Calculates the area of a trapezoid using its height and the lengths of its two bases.
-     * The formula used is: ((base1 + base2) * height) / 2.
+     * Calculates the area of a trapezoid using its two bases and height.
+     * <p>
+     * The formula used is:
+     * <pre>
+     *   area = ((base1 + base2) * height) / 2
+     * </pre>
+     * The result is always positive because the method applies {@code Math.abs()}.
+     * </p>
      *
-     * @param height the height of the trapezoid (must be a positive value)
-     * @param base1 the length of the first base (must be a positive value)
-     * @param base2 the length of the second base (must be a positive value)
-     * @return the computed area of the trapezoid as a double
+     * <p>
+     * Example:
+     * <pre>
+     *   calctrapezoidarea(10, 6, 4); // returns 32.0
+     * </pre>
+     * </p>
+     *
+     * @param base1  the length of the first base (should be positive)
+     * @param base2  the length of the second base (should be positive)
+     * @param height the height of the trapezoid (should be positive)
+     * @return the computed area of the trapezoid as a {@code double}
      */
     public static double calctrapezoidarea(double base1, double base2, double height){
         double area = Math.abs(((base1 + base2) * height) / 2);
@@ -443,10 +648,23 @@ public class Ex1 {
 
 
     /**
-     * This function extracts the power of x from an algebraic term string.
-     * Examples: "-1.0x^2" -> 2, "+3x" -> 1, "5.0" -> 0.
-     * @param poly
-     * @return
+     * Extracts the exponent (power) of {@code x} from an algebraic term string.
+     * <p>
+     * The method identifies the degree of the term based on the presence of {@code x} and {@code ^}.
+     * If no {@code x} is present, the power is {@code 0}. If {@code x} is present without {@code ^}, the power is {@code 1}.
+     * </p>
+     *
+     * <p>
+     * Examples:
+     * <ul>
+     *   <li>{@code "-1.0x^2"} → {@code 2}</li>
+     *   <li>{@code "+3x"} → {@code 1}</li>
+     *   <li>{@code "5.0"} → {@code 0}</li>
+     * </ul>
+     * </p>
+     *
+     * @param poly a string representing a single term of a polynomial (e.g., {@code "-1.0x^2"})
+     * @return the power of {@code x} as an integer (0 if no {@code x} is present)
      */
     public static int getxpower(String poly){
         poly = poly+"  ";

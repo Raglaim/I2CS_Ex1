@@ -206,6 +206,24 @@ class Ex1Test {
     // added tests from here
 
     @Test
+    public void testPolynomFromPoints() {
+        double[] xx1 = {1,3};
+        double[] yy1 = {2,6};
+        double[] two_point1 = Ex1.PolynomFromPoints(xx1,yy1);
+        double[] result1 = {0,2};
+        assertTrue(Ex1.equals(result1,two_point1));
+        double[] xx2 = {1,2,3};
+        double[] yy2 = {2,3,5};
+        double[] three_point = Ex1.PolynomFromPoints(xx2,yy2);
+        double[] result2 = {2,-0.5,0.5};
+        assertTrue(Ex1.equals(result2,three_point));
+        double[] xx3 = {0,10};
+        double[] yy3 = {0,10};
+        double[] two_point2 = Ex1.PolynomFromPoints(xx3,yy3);
+        double[] result3 = {0,1};
+        assertTrue(Ex1.equals(result3,two_point2));
+    }
+    @Test
     public void testgetPolynomFromStringelad() {
         double[] str_p1 = Ex1.getPolynomFromString("-1.0x^2 +3.0x +2.0");
         double [] result_p1 = {2,3,-1};
@@ -241,19 +259,6 @@ class Ex1Test {
         String str_p1 = Ex1.poly(p1);
         String result = "-1.2x^3 +3.1x^2 +2.0";
         assertEquals(result, str_p1);
-    }
-    @Test
-    public void testPolynomFromPoints() {
-        double[] xx1 = {1,3};
-        double[] yy1 = {2,6};
-        double[] two_point = Ex1.PolynomFromPoints(xx1,yy1);
-        double[] result1 = {0,2};
-        assertTrue(Ex1.equals(result1,two_point));
-        double[] xx2 = {1,2,3};
-        double[] yy2 = {2,3,5};
-        double[] three_point = Ex1.PolynomFromPoints(xx2,yy2);
-        double[] result2 = {2,-0.5,0.5};
-        assertTrue(Ex1.equals(result2,three_point));
     }
     @Test
     public void testlenghtelad() {

@@ -19,6 +19,8 @@ The given GUI (`Ex1_GUI.java`) uses `StdDraw` to visualize the polynomial and nu
 
 * `f` - Computes the f(x) value of the polynomial function at x.
 
+* `root_rec` - Given a polynomial function (p), a range [x1,x2] and an epsilon eps. This function computes an x value (x1<=x<=x2) for which |p(x)| < eps.
+
 * `PolynomFromPoints` - This function computes a polynomial representation from a set of 2D points on the polynom. this function only works for a set of points containing up to 3 points, else returns null.
 
 * `equals` - Two polynomials functions are equal if and only if they have the same values f(x) for n+1 values of x, where n is the max degree (over p1, p2) - up to an epsilon (aka EPS) value.
