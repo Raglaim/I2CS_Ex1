@@ -57,4 +57,4 @@ The given GUI (`Ex1_GUI.java`) uses `StdDraw` to visualize the polynomial and nu
 
 ## *Result:*
 
-![img.png](images/Result.png)
+![Ex1_gui.png](images/Ex1_gui.png)
