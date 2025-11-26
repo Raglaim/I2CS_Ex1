@@ -342,7 +342,7 @@ public class Ex1 {
                 double base1 = (f11 - f21);
                 double base2 = (f12 - f22);
                 if ((base1 * base2) < 0){
-                    double mid = sameValue(p1, p2, i, i+h, 0.000001);
+                    double mid = sameValue(p1, p2, i, i+h, EPS);
                     double area1 = calctrianglearea(base1, mid - i);
                     double area2 = calctrianglearea(base2, mid - i -h);
                     ans += (area1 + area2);

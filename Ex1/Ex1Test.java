@@ -204,6 +204,17 @@ class Ex1Test {
 
     // added tests from here
 
+    /**
+     * Tests getPolynomFromString with the following cases:
+     * <ul>
+     *   <li>Positive leading coefficient</li>
+     *   <li>Negative leading coefficient</li>
+     *   <li>Constant polynomial</li>
+     *   <li>Zero polynomial</li>
+     *   <li>Polynomial with missing degrees</li>
+     *   <li>High degree polynomial</li>
+     * </ul
+     */
     @Test
     public void testPolynomFromPoints() {
         double[] xx1 = {1,3};
@@ -224,7 +235,7 @@ class Ex1Test {
     }
     @Test
     public void testgetPolynomFromStringelad() {
-        double[] str_p1 = Ex1.getPolynomFromString("-1.0x^2 +3.0x +2.0");
+        double[] str_p1 = Ex1.getPolynomFromString("1.0x^2 +3.0x +2.0");
         double [] result_p1 = {2,3,-1};
         assertTrue(Ex1.equals(str_p1,result_p1));
         double[] str_p2 = Ex1.getPolynomFromString("-10.0");
