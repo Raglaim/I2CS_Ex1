@@ -4,8 +4,7 @@
 **Course:** Introduction to Computer Science (Ariel University, 2026)  
 **Assignment:** Ex1 – Basic programming: static functions, arrays, and JUnit.
 
-
-## Overview
+## <span style="color:red">O</span><span style="color:blue">v</span></span><span style="color:red">e</span></span><span style="color:blue">r</span></span><span style="color:red">v</span></span><span style="color:blue">i</span></span><span style="color:red">e</span></span><span style="color:blue">w</span>
 This project implements a set of **static functions** over 1D arrays representing polynomials and provides **JUnit tests** for each function.  
 The given GUI (`Ex1_GUI.java`) uses `StdDraw` to visualize the polynomial and numeric computations.
 
@@ -49,3 +48,9 @@ The given GUI (`Ex1_GUI.java`) uses `StdDraw` to visualize the polynomial and nu
 * `calctrapezoidarea` - Calculates the area of a trapezoid using its height and the lengths of its two bases.
 
 * `getxpower` - This function extracts the power of x from an algebraic term string.
+
+
+
+## *Result:*
+
+![result.png](images/result.png)
