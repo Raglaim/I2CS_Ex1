@@ -150,7 +150,6 @@ class Ex1Test {
 			assertFalse(Ex1.equals(d1[i], xx[i]));
 		}
 	}
-
 	@Test
 	/**
 	 * Tests is the sameValue function is symmetric.
