@@ -204,17 +204,6 @@ class Ex1Test {
 
     // added tests from here
 
-    /**
-     * Tests getPolynomFromString with the following cases:
-     * <ul>
-     *   <li>Positive leading coefficient</li>
-     *   <li>Negative leading coefficient</li>
-     *   <li>Constant polynomial</li>
-     *   <li>Zero polynomial</li>
-     *   <li>Polynomial with missing degrees</li>
-     *   <li>High degree polynomial</li>
-     * </ul
-     */
     @Test
     public void testPolynomFromPoints() {
         double[] xx1 = {1,3};
@@ -315,11 +304,38 @@ class Ex1Test {
     }
     @Test
     public void testaddelad() {
+        double[] p1 = {-2,0,1};
+        double[] p2 = {-1,0,0,1};
+        double[] p3 = {4,0,-4,0,1};
+        double[] p1p2 = Ex1.add(p1, p2);
+        double[] p1p3 = Ex1.add(p1, p3);
+        double[] p2p3 = Ex1.add(p2, p3);
+        double[] p1p2p3 = Ex1.add(p1p2,p3);
+        double[] result12 = {-3,0,1,1};
+        double[] result13 = {2,0,-3,0,1};
+        double[] result23 = {3,0,-4,1,1};
+        double[] result123 = {1,0,-3,1,1};
+        assertTrue(Ex1.equals(p1p2, result12));
+        assertTrue(Ex1.equals(p1p3, result13));
+        assertTrue(Ex1.equals(p2p3, result23));
+        assertTrue(Ex1.equals(p1p2p3, result123));
     }
     @Test
     public void testmulelad() {
-        double [] P1_po1 = Ex1.mul(P1,po1);
-        double [] result = {4,4,6,4,-2};
-        assertTrue(Ex1.equals(P1_po1,result));
+        double[] p1 = {-2,0,1};
+        double[] p2 = {-1,0,0,1};
+        double[] p3 = {4,0,-4,0,1};
+        double[] p1p2 = Ex1.mul(p1, p2);
+        double[] p1p3 = Ex1.mul(p1, p3);
+        double[] p2p3 = Ex1.mul(p2, p3);
+        double[] p1p2p3 = Ex1.mul(p1p2,p3);
+        double[] result12 = {2,0,-1,-2,0,1};
+        double[] result13 = {-8,0,12,0,-6,0,1};
+        double[] result23 = {-4,0,4,4,-1,-4,0,1};
+        double[] result123 = {8,0,-12,-8,6,12,-1,-6,0,1};
+        assertTrue(Ex1.equals(p1p2, result12));
+        assertTrue(Ex1.equals(p1p3, result13));
+        assertTrue(Ex1.equals(p2p3, result23));
+        assertTrue(Ex1.equals(p1p2p3, result123));
     }
 }
