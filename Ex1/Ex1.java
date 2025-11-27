@@ -111,28 +111,32 @@ public class Ex1 {
      */
     public static double[] PolynomFromPoints(double[] xx, double[] yy) {
         double [] ans = null;
-        int lx = xx.length;
-        int ly = yy.length;
-        if(xx!=null && yy!=null && lx==ly && lx>1 && lx<4) {
-            if (lx==2){
-                double m = (yy[1]-yy[0])/(xx[1]-xx[0]);
-                double b = yy[0] - m*xx[0];
-                ans = new double[]{b,m};
-            } else {
-                double denom = (xx[0] - xx[1]) * (xx[0] - xx[2]) * (xx[1] - xx[2]);
-                double a = (xx[2] * (yy[1] - yy[0]) +
-                        xx[1] * (yy[0] - yy[2]) +
-                        xx[0] * (yy[2] - yy[1])) / denom;
-                double b = (xx[2] * xx[2] * (yy[0] - yy[1]) +
-                        xx[1] * xx[1] * (yy[2] - yy[0]) +
-                        xx[0] * xx[0] * (yy[1] - yy[2])) / denom;
-                double c = (xx[1] * xx[2] * (xx[1] - xx[2]) * yy[0] +
-                        xx[2] * xx[0] * (xx[2] - xx[0]) * yy[1] +
-                        xx[0] * xx[1] * (xx[0] - xx[1]) * yy[2]) / denom;
-                ans = new double[]{c, b, a};
+        if (xx==null || yy==null){
+            return ans;
+        } else {
+            int lx = xx.length;
+            int ly = yy.length;
+            if(lx==ly && lx>1 && lx<4) {
+                if (lx==2){
+                    double m = (yy[1]-yy[0])/(xx[1]-xx[0]);
+                    double b = yy[0] - m*xx[0];
+                    ans = new double[]{b,m};
+                } else {
+                    double denom = (xx[0] - xx[1]) * (xx[0] - xx[2]) * (xx[1] - xx[2]);
+                    double a = (xx[2] * (yy[1] - yy[0]) +
+                            xx[1] * (yy[0] - yy[2]) +
+                            xx[0] * (yy[2] - yy[1])) / denom;
+                    double b = (xx[2] * xx[2] * (yy[0] - yy[1]) +
+                            xx[1] * xx[1] * (yy[2] - yy[0]) +
+                            xx[0] * xx[0] * (yy[1] - yy[2])) / denom;
+                    double c = (xx[1] * xx[2] * (xx[1] - xx[2]) * yy[0] +
+                            xx[2] * xx[0] * (xx[2] - xx[0]) * yy[1] +
+                            xx[0] * xx[1] * (xx[0] - xx[1]) * yy[2]) / denom;
+                    ans = new double[]{c, b, a};
+                }
             }
+            return ans;
         }
-		return ans;
 	}
 
 
@@ -160,6 +164,9 @@ public class Ex1 {
 		boolean ans = true;
         if (p1 == null && p2 == null) {
             return ans;
+        }
+        if (p1 == null || p2 == null) {
+            return !ans;
         }
         if (p1.length == p2.length){
             for (int i = 0; i < p1.length; i++) {
@@ -206,9 +213,13 @@ public class Ex1 {
      * @return a string representation of the polynomial, or {@code ""} if the array is empty
      */
     public static String poly(double[] poly) {
-        String ans = "";
+        String ans = "0.0";
         if(poly.length==0) {return ans;}
-        else {
+        if (poly.length==1) {
+            ans = "" + poly[0];
+            return ans;
+        } else {
+            ans = "";
             for (int i = poly.length-1; 0 <= i; i-=1) {
                 if (poly[i] == 0) {
                 }else if(i == 0){
@@ -268,6 +279,10 @@ public class Ex1 {
     public static double sameValue(double[] p1, double[] p2, double x1, double x2, double eps) {
 		double ans = x1;
         double f1 = ((f(p1,x1)-f(p2,x1)));
+        double f2 = ((f(p1,x2)-f(p2,x2)));
+        if(f1*f2>0){
+            return Double.NaN;
+        }
         double x12 = (x1+x2)/2;
         double f12 = f(p1,x12) - f(p2,x12);
         if (Math.abs(f12) < eps){return x12;}
@@ -309,10 +324,10 @@ public class Ex1 {
      */
     public static double length(double[] p, double x1, double x2, int numberOfSegments) {
 		double ans = 0;
-        double h = Math.abs(x1-x2)/numberOfSegments;
         if(x1 == x2){
             return ans;
         } else if (x1 < x2) {
+            double h = Math.abs(x1-x2)/numberOfSegments;
             for (double i=x1; i<x2; i+=h) {
                 double y1 = f(p,i);
                 double y2 = f(p,i+h);
@@ -515,15 +530,14 @@ public class Ex1 {
      */
     public static double[] derivative (double[] po) {
         double [] ans = ZERO;//
-        if (po.length <= 1){
-        }else{
+        if (po.length > 1){
             ans = new double[po.length-1];
             for (int i = 1; i < po.length; i++) {
                 ans [i-1] = po[i]*i;
             }
         }
         return ans;
-	}
+    }
 
 
 
@@ -568,7 +582,6 @@ public class Ex1 {
                 break;
             }
         }
-
         String number = word.substring(0,i);
         if (number.isEmpty()){
             return ans;
@@ -597,8 +610,8 @@ public class Ex1 {
      * @param arr the array to reverse; may be {@code null}
      * @return the same array with elements reversed, or {@code null} if the input was {@code null}
      */
-    public static double[] reverseArray(double[] arr) {
-        if (arr == null) return arr;
+    public static double[] reversearray(double[] arr) {
+        if (arr == null) return null;
         int i = 0, j = arr.length - 1;
         while (i < j) {
             double temp = arr[i];
@@ -703,7 +716,7 @@ public class Ex1 {
                         x++;
                         i++;
                     }
-                    reverseArray(pow_arr);
+                    reversearray(pow_arr);
                     for (int j = 0; j < pow_arr.length; j++) {
                         power += (int) (pow_arr[j] * Math.pow(10, j));
                     }

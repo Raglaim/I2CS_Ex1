@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  *  * Introduction to Computer Science 2026, Ariel University,
  *  * Ex1: arrays, static functions and JUnit
- *
+ * <p>
  * This JUnit class represents a JUnit (unit testing) for Ex1-
  * It contains few testing functions for the polynomial functions as define in Ex1.
  * Note: you should add additional JUnit testing functions to this class.
@@ -204,37 +204,82 @@ class Ex1Test {
 
     // added tests from here
 
+    //Main Functions Tests - Elad Nagar
+
+    /**
+     * Tests PolynomFromPoints:
+     * - Handles empty arrays, single point, two points (linear), and three points (quadratic).
+     */
     @Test
-    public void testPolynomFromPoints() {
-        double[] xx1 = {1,3};
-        double[] yy1 = {2,6};
-        double[] two_point1 = Ex1.PolynomFromPoints(xx1,yy1);
-        double[] result1 = {0,2};
-        assertTrue(Ex1.equals(result1,two_point1));
-        double[] xx2 = {1,2,3};
-        double[] yy2 = {2,3,5};
-        double[] three_point1 = Ex1.PolynomFromPoints(xx2,yy2);
-        double[] result2 = {2,-0.5,0.5};
-        assertTrue(Ex1.equals(result2,three_point1));
-        double[] xx3 = {0,10};
-        double[] yy3 = {0,-10};
-        double[] two_point2 = Ex1.PolynomFromPoints(xx3,yy3);
-        double[] result3 = {0,-1};
-        assertTrue(Ex1.equals(result3,two_point2));
+    public void testPolynomFromPointselad() {
+        double[] xx1 = {};
+        double[] yy1 = {0};
+        double[] polyfrompoints1 = Ex1.PolynomFromPoints(xx1,yy1);
+        double[] result1 = null;
+        assertTrue(Ex1.equals(result1,polyfrompoints1));
+        double[] xx2 = {1};
+        double[] yy2 = {5};
+        double[] polyfrompoints2 = Ex1.PolynomFromPoints(xx2,yy2);
+        double[] result2 = null;
+        assertTrue(Ex1.equals(result2,polyfrompoints2));
+        double[] xx3 = {1,3};
+        double[] yy3 = {2,6};
+        double[] polyfrompoints3 = Ex1.PolynomFromPoints(xx3,yy3);
+        double[] result3 = {0,2};
+        assertTrue(Ex1.equals(result3,polyfrompoints3));
         double[] xx4 = {1,2,3};
-        double[] yy4 = {-2,-3,-5};
-        double[] three_point2 = Ex1.PolynomFromPoints(xx4,yy4);
-        double[] result4 = {-2,0.5,-0.5};
-        assertTrue(Ex1.equals(result4,three_point2));
+        double[] yy4 = {2,3,5};
+        double[] polyfrompoints4 = Ex1.PolynomFromPoints(xx4,yy4);
+        double[] result4 = {2,-0.5,0.5};
+        assertTrue(Ex1.equals(result4,polyfrompoints4));
     }
+
+    /**
+     * Tests equals method:
+     * - Checks equality for empty arrays, null, EPS tolerance, and inequality for different lengths.
+     */
+    @Test
+    public  void testequalselad() {
+        double[] p0 = {};
+        assertTrue(Ex1.equals(p0,p0));
+        assertTrue(Ex1.equals(null, null));
+        assertFalse(Ex1.equals(p0, null));
+        double[] p1 = {2,0,3.1,-1.2};
+        double[] p2 = {2+Ex1.EPS/2,0,3.1,-1.2};
+        double[] p3 = {2+Ex1.EPS*2,0,3.1,-1.2};
+        assertTrue(Ex1.equals(p1,p2));
+        assertFalse(Ex1.equals(p1,p3));
+        double[] p4 = {1,2,3};
+        assertFalse(Ex1.equals(p4,p1));
+    }
+
+    /**
+     * Tests poly method:
+     * - Converts polynomial arrays to string representation and verifies formatting.
+     */
     @Test
     public void testpolyelad() {
-        double[] p1 = {2,0,3.1,-1.2};
+        double[] p1 = {};
         String str_p1 = Ex1.poly(p1);
-        String result = "-1.2x^3 +3.1x^2 +2.0";
-        assertEquals(result, str_p1);
+        String result1 = "0.0";
+        assertEquals(result1, str_p1);
+        double[] p2 = {10};
+        String str_p2 = Ex1.poly(p2);
+        String result2 = "10.0";
+        assertEquals(result2, str_p2);
+        double[] p3 = {2,0,3.1,-1.2};
+        String str_p3 = Ex1.poly(p3);
+        String result3 = "-1.2x^3 +3.1x^2 +2.0";
+        String resultnot3 = " -1.2x^3 +3.1x^2 +2.0 ";
+        assertEquals(result3, str_p3);
+        assertNotEquals(resultnot3, str_p3);
 
     }
+
+    /**
+     * Tests sameValue:
+     * - Finds intersection point in a small interval and validates result within EPS.
+     */
     @Test
     public void  testsameValueelad1() {
         double[] p1 = {-4, 9, 4, 0, -3};
@@ -242,6 +287,11 @@ class Ex1Test {
         double result = Ex1.sameValue(p1, p2, -0.2366, -0.2368, Ex1.EPS);
         assertEquals(-0.2367, result, Ex1.EPS);
     }
+
+    /**
+     * Tests sameValue with multiple intervals:
+     * - Ensures correct root finding or zero when no intersection.
+     */
     @Test
     public void  testsameValueelad2() {
         double[] p1 = {1,-2,1,-3};
@@ -254,14 +304,21 @@ class Ex1Test {
         assertEquals(0.767592, result3, Ex1.EPS);
 
     }
+
+    /**
+     * Tests length method:
+     * - Computes curve length over an interval, handles zero-length interval, and different polynomials.
+     */
     @Test
     public void testlenghtelad() {
         double[] p_1 = {0,1};
         double x1_1 = 0;
         double x2_1 = 10;
         int numberOfSegments_1 = 10;
-        double result_1 = Ex1.length(p_1,x1_1,x2_1,numberOfSegments_1);
-        assertEquals(14.142, result_1, Ex1.EPS);
+        double result_11 = Ex1.length(p_1,x1_1,x2_1,numberOfSegments_1);
+        double result_12 = Ex1.length(p_1,x1_1,x1_1,numberOfSegments_1);
+        assertEquals(14.142, result_11, Ex1.EPS);
+        assertEquals(0, result_12, Ex1.EPS);
         double[] p_2 = {2,0,-4};
         double x1_2 = 2;
         double x2_2 = -2;
@@ -269,15 +326,29 @@ class Ex1Test {
         double result_2 = Ex1.length(p_2,x1_2,x2_2,numberOfSegments_2);
         assertEquals(32.329, result_2, Ex1.EPS);
     }
+
+    /**
+     * Tests area method:
+     * - Calculates area between two polynomials, handles reversed interval and zero-area case.
+     */
     @Test
     public void testereaelad() {
         double [] p1 = Ex1.mul(P1,po1);
         double [] p2 = Ex1.add(P2,po2);
         double meet1 = Ex1.sameValue(p1,p2, -5,0, Ex1.EPS);
         double meet2 = Ex1.sameValue(p1,p2, 0,5, Ex1.EPS);
-        double result = Ex1.area(p1,p2, meet1,meet2,10000);
-        assertEquals(23.43183, result, Ex1.EPS);
+        double result11 = Ex1.area(p1,p2, meet1,meet2,10000);
+        double result12 = Ex1.area(p1,p2, meet2,meet1,10000);
+        assertEquals(23.43183, result11, Ex1.EPS);
+        assertEquals(23.43183, result12, Ex1.EPS);
+        double result2 = Ex1.area(p1,p2, 0,0,10000);
+        assertEquals(0, result2, Ex1.EPS);
     }
+
+    /**
+     * Tests getPolynomFromString:
+     * - Converts string to polynomial array, handles constants, zero, and high-degree terms.
+     */
     @Test
     public void testgetPolynomFromStringelad() {
         double[] str_p1 = Ex1.getPolynomFromString("-1.0x^2 +3.0x +2.0");
@@ -302,6 +373,11 @@ class Ex1Test {
         double [] result_p7 = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,67,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1};
         assertTrue(Ex1.equals(str_p7,result_p7));
     }
+
+    /**
+     * Tests add method:
+     * - Adds polynomials of different lengths and verifies correctness for multiple combinations.
+     */
     @Test
     public void testaddelad() {
         double[] p1 = {-2,0,1};
@@ -320,22 +396,141 @@ class Ex1Test {
         assertTrue(Ex1.equals(p2p3, result23));
         assertTrue(Ex1.equals(p1p2p3, result123));
     }
+
+    /**
+     * Tests mul method:
+     * - Multiplies polynomials, including zero polynomial, and validates results.
+     */
     @Test
     public void testmulelad() {
+        double[] p0 = {0};
         double[] p1 = {-2,0,1};
         double[] p2 = {-1,0,0,1};
         double[] p3 = {4,0,-4,0,1};
+        double[] p0p1 = Ex1.mul(p0, p1);
         double[] p1p2 = Ex1.mul(p1, p2);
-        double[] p1p3 = Ex1.mul(p1, p3);
+        double[] p1p3 = Ex1.mul(p3, p1);
         double[] p2p3 = Ex1.mul(p2, p3);
         double[] p1p2p3 = Ex1.mul(p1p2,p3);
+        double[] result0 = {0};
         double[] result12 = {2,0,-1,-2,0,1};
         double[] result13 = {-8,0,12,0,-6,0,1};
         double[] result23 = {-4,0,4,4,-1,-4,0,1};
         double[] result123 = {8,0,-12,-8,6,12,-1,-6,0,1};
+        assertTrue(Ex1.equals(p0p1, result0));
         assertTrue(Ex1.equals(p1p2, result12));
         assertTrue(Ex1.equals(p1p3, result13));
         assertTrue(Ex1.equals(p2p3, result23));
         assertTrue(Ex1.equals(p1p2p3, result123));
+    }
+
+    /**
+     * Tests derivative method:
+     * - Handles empty and constant polynomials, computes derivatives for higher-degree polynomials.
+     */
+    @Test
+    public void testderivativeelad() {
+        double[] p00 = {};
+        double[] p0 = {5};
+        double[] p1 = {-2,0,1};
+        double[] p2 = {-1,0,0,1};
+        double[] p3 = {4,0,-4,0,1};
+        double[] dp00 = Ex1.derivative(p00);
+        double[] dp0 = Ex1.derivative(p0);
+        double[] dp1 = Ex1.derivative(p1);
+        double[] dp2 = Ex1.derivative(p2);
+        double[] dp3 = Ex1.derivative(p3);
+        double[] result0 = {0};
+        double[] result1 = {0,2};
+        double[] result2 = {0,0,3};
+        double[] result3 = {0,-8,0,4};
+        assertTrue(Ex1.equals(dp00, result0));
+        assertTrue(Ex1.equals(dp0, result0));
+        assertTrue(Ex1.equals(dp1, result1));
+        assertTrue(Ex1.equals(dp2, result2));
+        assertTrue(Ex1.equals(dp3, result3));
+    }
+
+    //Extra Functions Tests - Elad Nagar
+
+    /**
+     * Tests getcoefficient:
+     * - Extracts the leading coefficient from polynomial strings.
+     * - Handles negative, positive, and large power cases.
+     */
+    @Test
+    public void testgetcoefficientelad() {
+        String p1 = "-1.0x^2 +3.0x +2.0";
+        String p2 = "10";
+        String p3 = "x^100 +67x^67 +0";
+        assertEquals(-1, Ex1.getcoefficient(p1));
+        assertEquals(10, Ex1.getcoefficient(p2));
+        assertEquals(1, Ex1.getcoefficient(p3));
+
+    }
+
+    /**
+     * Tests reversearray:
+     * - Reverses arrays of different lengths.
+     * - Handles empty arrays and single-element arrays.
+     */
+    @Test
+    public void testreverearrayelad() {
+        double[] arr1 = {};
+        double[] rev1 = Ex1.reversearray(arr1);
+        double[] result1 = {};
+        assertTrue(Ex1.equals(result1,rev1));
+        double[] arr2 = {5};
+        double[] rev2 = Ex1.reversearray(arr2);
+        double[] result2 = {5};
+        assertTrue(Ex1.equals(result2,rev2));
+        double[] arr3 = {1,2,3,4,5};
+        double[] rev3 = Ex1.reversearray(arr3);
+        double[] result3 = {5,4,3,2,1};
+        assertTrue(Ex1.equals(result3,rev3));
+        double[] arr4 = {10,20,30,40};
+        double[] rev4 = Ex1.reversearray(arr4);
+        double[] result4 = {40,30,20,10};
+        assertTrue(Ex1.equals(result4,rev4));
+    }
+
+    /**
+     * Tests calctrianglearea:
+     * - Calculates area of a triangle using base and height.
+     */
+    @Test
+    public void testcalctriangleareaelad() {
+        double base = 10;
+        double height = 5;
+        double area = Ex1.calctrianglearea(base, height);
+        assertEquals(25, area, Ex1.EPS);
+    }
+
+    /**
+     * Tests calctrapezoidarea:
+     * - Calculates area of a trapezoid using two bases and height.
+     */
+    @Test
+    public void testcalctrapezoidareaelad() {
+        double base1 = 10;
+        double base2 = 10;
+        double height = 5;
+        double area = Ex1.calctrapezoidarea(base1, base2, height);
+        assertEquals(50, area, Ex1.EPS);
+    }
+
+    /**
+     * Tests getxpower:
+     * - Extracts the power of x from a term string.
+     * - Handles terms with x^n, x, and constants.
+     */
+    @Test
+    public void testgetxpowerelad() {
+        String term1 = "-1.0x^2";
+        String term2 = "3.0x";
+        String term3 = "2.0";
+        assertEquals(2, Ex1.getxpower(term1));
+        assertEquals(1, Ex1.getxpower(term2));
+        assertEquals(0, Ex1.getxpower(term3));
     }
 }

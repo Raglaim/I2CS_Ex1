@@ -45,7 +45,7 @@ The given GUI (`Ex1_GUI.java`) uses `StdDraw` to visualize the polynomial and nu
 
 * `getcoefficient` - Extracts the numeric coefficient from an algebraic term string.
 
-* `reverseArray` - Reverses the elements of the given array in place.
+* `reversearray` - Reverses the elements of the given array in place.
 
 * `calctrianglearea` - Calculates the area of a triangle using its base and height.
 
@@ -57,4 +57,4 @@ The given GUI (`Ex1_GUI.java`) uses `StdDraw` to visualize the polynomial and nu
 
 ## *Result:*
 
-![Ex1_gui.png](images/Ex1_gui.png)
+<img alt="Ex1_gui.png" height="256" src="images/Ex1_gui.png" width="256"/>
