@@ -239,30 +239,6 @@ class Ex1Test {
         assertTrue(Ex1.equals(result4,three_point2));
     }
     @Test
-    public void testgetPolynomFromStringelad() {
-        double[] str_p1 = Ex1.getPolynomFromString("1.0x^2 +3.0x +2.0");
-        double [] result_p1 = {2,3,-1};
-        assertTrue(Ex1.equals(str_p1,result_p1));
-        double[] str_p2 = Ex1.getPolynomFromString("-10.0");
-        double [] result_p2 = {-10};
-        assertTrue(Ex1.equals(str_p2,result_p2));
-        double[] str_p3 = Ex1.getPolynomFromString("0");
-        double [] result_p3 = {0};
-        assertTrue(Ex1.equals(str_p3,result_p3));
-        double[] str_p4 = Ex1.getPolynomFromString("10");
-        double [] result_p4 = {10};
-        assertTrue(Ex1.equals(str_p4,result_p4));
-        double[] str_p5 = Ex1.getPolynomFromString("-20x^4 +9.0x^3 +1.0x");
-        double [] result_p5 = {0,1,0,9,-20};
-        assertTrue(Ex1.equals(str_p5,result_p5));
-        double[] str_p6 = Ex1.getPolynomFromString("-0.001x^10 +0");
-        double [] result_p6 = {0,0,0,0,0,0,0,0,0,0,-0.001};
-        assertTrue(Ex1.equals(str_p6,result_p6));
-        double[] str_p7 = Ex1.getPolynomFromString("x^100 +67x^67 +0");
-        double [] result_p7 = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,67,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1};
-        assertTrue(Ex1.equals(str_p7,result_p7));
-    }
-    @Test
     public void testpolyelad() {
         double[] p1 = {2,0,3.1,-1.2};
         String str_p1 = Ex1.poly(p1);
@@ -303,6 +279,42 @@ class Ex1Test {
         int numberOfSegments_2 = 4;
         double result_2 = Ex1.length(p_2,x1_2,x2_2,numberOfSegments_2);
         assertEquals(32.329, result_2, Ex1.EPS);
+    }
+    @Test
+    public void testereaelad() {
+        double [] p1 = Ex1.mul(P1,po1);
+        double [] p2 = Ex1.add(P2,po2);
+        double meet1 = Ex1.sameValue(p1,p2, -5,0, Ex1.EPS);
+        double meet2 = Ex1.sameValue(p1,p2, 0,5, Ex1.EPS);
+        double result = Ex1.area(p1,p2, meet1,meet2,10000);
+        assertEquals(23.43183, result, Ex1.EPS);
+    }
+    @Test
+    public void testgetPolynomFromStringelad() {
+        double[] str_p1 = Ex1.getPolynomFromString("-1.0x^2 +3.0x +2.0");
+        double [] result_p1 = {2,3,-1};
+        assertTrue(Ex1.equals(str_p1,result_p1));
+        double[] str_p2 = Ex1.getPolynomFromString("-10.0");
+        double [] result_p2 = {-10};
+        assertTrue(Ex1.equals(str_p2,result_p2));
+        double[] str_p3 = Ex1.getPolynomFromString("0");
+        double [] result_p3 = {0};
+        assertTrue(Ex1.equals(str_p3,result_p3));
+        double[] str_p4 = Ex1.getPolynomFromString("10");
+        double [] result_p4 = {10};
+        assertTrue(Ex1.equals(str_p4,result_p4));
+        double[] str_p5 = Ex1.getPolynomFromString("-20x^4 +9.0x^3 +1.0x");
+        double [] result_p5 = {0,1,0,9,-20};
+        assertTrue(Ex1.equals(str_p5,result_p5));
+        double[] str_p6 = Ex1.getPolynomFromString("-0.001x^10 +0");
+        double [] result_p6 = {0,0,0,0,0,0,0,0,0,0,-0.001};
+        assertTrue(Ex1.equals(str_p6,result_p6));
+        double[] str_p7 = Ex1.getPolynomFromString("x^100 +67x^67 +0");
+        double [] result_p7 = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,67,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1};
+        assertTrue(Ex1.equals(str_p7,result_p7));
+    }
+    @Test
+    public void testaddelad() {
     }
     @Test
     public void testmulelad() {
