@@ -224,14 +224,19 @@ class Ex1Test {
         assertTrue(Ex1.equals(result1,two_point1));
         double[] xx2 = {1,2,3};
         double[] yy2 = {2,3,5};
-        double[] three_point = Ex1.PolynomFromPoints(xx2,yy2);
+        double[] three_point1 = Ex1.PolynomFromPoints(xx2,yy2);
         double[] result2 = {2,-0.5,0.5};
-        assertTrue(Ex1.equals(result2,three_point));
+        assertTrue(Ex1.equals(result2,three_point1));
         double[] xx3 = {0,10};
-        double[] yy3 = {0,10};
+        double[] yy3 = {0,-10};
         double[] two_point2 = Ex1.PolynomFromPoints(xx3,yy3);
-        double[] result3 = {0,1};
+        double[] result3 = {0,-1};
         assertTrue(Ex1.equals(result3,two_point2));
+        double[] xx4 = {1,2,3};
+        double[] yy4 = {-2,-3,-5};
+        double[] three_point2 = Ex1.PolynomFromPoints(xx4,yy4);
+        double[] result4 = {-2,0.5,-0.5};
+        assertTrue(Ex1.equals(result4,three_point2));
     }
     @Test
     public void testgetPolynomFromStringelad() {
@@ -258,17 +263,31 @@ class Ex1Test {
         assertTrue(Ex1.equals(str_p7,result_p7));
     }
     @Test
-    public void testmulelad() {
-        double [] P1_po1 = Ex1.mul(P1,po1);
-        double [] result = {4,4,6,4,-2};
-        assertTrue(Ex1.equals(P1_po1,result));
-    }
-    @Test
     public void testpolyelad() {
         double[] p1 = {2,0,3.1,-1.2};
         String str_p1 = Ex1.poly(p1);
         String result = "-1.2x^3 +3.1x^2 +2.0";
         assertEquals(result, str_p1);
+
+    }
+    @Test
+    public void  testsameValueelad1() {
+        double[] p1 = {-4, 9, 4, 0, -3};
+        double[] p2 = {-4, 8, 0, 0, -7};
+        double result = Ex1.sameValue(p1, p2, -0.2366, -0.2368, Ex1.EPS);
+        assertEquals(-0.2367, result, Ex1.EPS);
+    }
+    @Test
+    public void  testsameValueelad2() {
+        double[] p1 = {1,-2,1,-3};
+        double[] p2 = {1,-4,-1,3};
+        double result1 = Ex1.sameValue(p1, p2, -0.25, -1, Ex1.EPS);
+        double result2 = Ex1.sameValue(p1, p2, -0.25, 0.5, Ex1.EPS);
+        double result3 = Ex1.sameValue(p1, p2, -0.5, 1, Ex1.EPS);
+        assertEquals(-0.43426, result1, Ex1.EPS);
+        assertEquals(0, result2, Ex1.EPS);
+        assertEquals(0.767592, result3, Ex1.EPS);
+
     }
     @Test
     public void testlenghtelad() {
@@ -284,5 +303,11 @@ class Ex1Test {
         int numberOfSegments_2 = 4;
         double result_2 = Ex1.length(p_2,x1_2,x2_2,numberOfSegments_2);
         assertEquals(32.329, result_2, Ex1.EPS);
+    }
+    @Test
+    public void testmulelad() {
+        double [] P1_po1 = Ex1.mul(P1,po1);
+        double [] result = {4,4,6,4,-2};
+        assertTrue(Ex1.equals(P1_po1,result));
     }
 }

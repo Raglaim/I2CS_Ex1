@@ -1,22 +1,43 @@
 package assignments.Ex1;
 
 /**
- * Introduction to Computer Science 2026, Ariel University,
- * Ex1: arrays, static functions and JUnit
- * https://docs.google.com/document/d/1GcNQht9rsVVSt153Y8pFPqXJVju56CY4/edit?usp=sharing&ouid=113711744349547563645&rtpof=true&sd=true
+ * Utilities for working with polynomial functions represented as arrays of coefficients.
+ * <p>
+ * A polynomial {@code f(x)} is represented as an array where the index indicates the degree, e.g.:
+ * <ul>
+ *   <li>{@code [c, b, a]} represents {@code f(x) = a·x^2 + b·x + c}</li>
+ *   <li>{@code [0.1, 0, -3, 0.2]} represents {@code f(x) = 0.2x^3 - 3x^2 + 0.1}</li>
+ * </ul>
+ * </p>
  *
- * This class represents a set of static methods on a polynomial functions - represented as an array of doubles.
- * The array {0.1, 0, -3, 0.2} represents the following polynomial function: 0.2x^3-3x^2+0.1
- * This is the main Class you should implement (see "add your code below")
+ * <p>
+ * This class is part of:
+ * <br>
+ * <strong>Introduction to Computer Science 2026, Ariel University</strong><br>
+ * Exercise 1: Arrays, static functions, and JUnit
+ * </p>
  *
+ * <p>
+ * Assignment details:
+ * https://docs.google.com/document/d/1GcNQht9rsVVSt153Y8pFPqXJVju56CY4/edit?usp=sharing&ouid=113711744349547563645&rtpof=true&sd=true<br>
+ * Google Docs specification
+ * </a>
+ * </p>
+ *
+ * <h3>Conventions</h3>
+ * <ul>
+ *   <li>Coefficients are in ascending degree order (index 0 is the constant term).</li>
+ *   <li>{@code ZERO} denotes the zero polynomial: {@code [0]}.</li>
+ *   <li>{@code EPS} is a small positive tolerance used in numeric comparisons.</li>
+ * </ul>
+ * </p>
  * @author boaz.benmoshe
-
  */
 public class Ex1 {
-	/** Epsilon value for numerical computation, it serves as a "close enough" threshold. */
-	public static final double EPS = 0.001; // the epsilon to be used for the root approximation.
-	/** The zero polynomial function is represented as an array with a single (0) entry. */
-	public static final double[] ZERO = {0};
+    /** Epsilon value for numerical computation; used as a "close enough" threshold (e.g., for root/area/length approximations). */
+    public static final double EPS = 0.001; // the epsilon to be used for the root approximation.
+    /** The zero polynomial function, represented as an array with a single {@code 0} entry. */
+    public static final double[] ZERO = {0};
 
 
 
